@@ -2,10 +2,47 @@ import Navbar from "../component/Navbar";
 import SectionHeading from "../component/SectionHeading";
 import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
+import {Helmet} from "react-helmet-async";
 
 function Contact() {
   return (
-    <div className="contact-me">
+    <>
+       <Helmet>
+      <title>Contact Idris Abayomi – 3D Designer, Drone Pilot & Graphic Designer</title>
+      <meta
+        name="description"
+        content="Get in touch with Idris Abayomi, available for freelance 3D design, drone videography, and graphic design projects worldwide."
+      />
+      <meta name="keywords" content="contact Idris Abayomi, hire Idris Abayomi, 3D designer, drone pilot, graphic designer, freelance" />
+      <meta name="author" content="Idris Abayomi" />
+      <meta name="robots" content="index, follow" />
+
+      {/* Open Graph */}
+      <meta property="og:title" content="Contact Idris Abayomi – 3D Designer, Drone Pilot & Graphic Designer" />
+      <meta property="og:description" content="Get in touch with Idris Abayomi, available for freelance 3D design, drone videography, and graphic design projects worldwide." />
+      <meta property="og:image" content="https://res.cloudinary.com/dbn6k7pg6/image/upload/v1764094720/BOYIDRIS_1_xgkmda.jpg" />
+      <meta property="og:url" content="https://boyidris.vercel.app/contact" />
+      <meta property="og:type" content="website" />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Contact Idris Abayomi – 3D Designer, Drone Pilot & Graphic Designer" />
+      <meta name="twitter:description" content="Get in touch with Idris Abayomi, available for freelance 3D design, drone videography, and graphic design projects worldwide." />
+      <meta name="twitter:image" content="https://res.cloudinary.com/dbn6k7pg6/image/upload/v1764094720/BOYIDRIS_1_xgkmda.jpg" />
+
+      {/* JSON-LD */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact Idris Abayomi",
+          "description": "Get in touch with Idris Abayomi, available for freelance 3D design, drone videography, and graphic design projects worldwide.",
+          "url": "https://boyidris.vercel.app/contact"
+        })}
+      </script>
+    </Helmet>
+
+      <div className="contact-me">
       <Navbar />
       <SubHero>
         Reach out and <br /> <span>say hi</span>
@@ -57,6 +94,7 @@ function Contact() {
 
       <Footer/>
     </div>
+    </>
   );
 }
 

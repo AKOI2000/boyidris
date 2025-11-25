@@ -33,7 +33,7 @@ function Dashboard() {
           <div className="sidebar-container">
             <div className="sidebar-logo-box">
               <div className="sidebar-logo">
-                {/* <img src="../../public/Images/logo.png" alt="Boy Idris" /> */}
+                {/* <img src="/Images/logo.png" alt="Boy Idris" /> */}
                 BOYIdris
               </div>
               <button onClick={() => setOpen((open) => !open)}>&times;</button>
