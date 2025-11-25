@@ -3,6 +3,22 @@ import { NavLink, Outlet } from "react-router-dom";
 
 function Dashboard() {
   const [open, setOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  async function logout(e) {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("https://boyidrisbe.onrender.com/admin/logout");
+      if (!res.ok) throw new Error("Error Logging out");
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -12,7 +28,7 @@ function Dashboard() {
             <div className="sidebar-logo-box">
               <div className="sidebar-logo">
                 {/* <img src="../../public/Images/logo.png" alt="Boy Idris" /> */}
-                Idris
+                BOYIdris
               </div>
               <button onClick={() => setOpen((open) => !open)}>&times;</button>
             </div>
@@ -20,22 +36,22 @@ function Dashboard() {
             <div className="sidebar-links">
               <NavLink to="/dashboard/works">
                 <span>Works</span>
-                <img src="../../public/Images/Works.png" alt="" />
+                <img src="/Images/Works.png" alt="" />
               </NavLink>
               <NavLink to="/dashboard/experience">
                 <span>Experience</span>
-                <img src="../../public/Images/user-experience.png" alt="" />
+                <img src="/Images/user-experience.png" alt="" />
               </NavLink>
               <NavLink to="/dashboard/clients">
                 <span>Clients</span>
-                <img src="../../public/Images/Clients.png" alt="" />
+                <img src="/Images/Clients.png" alt="" />
               </NavLink>
             </div>
 
             <div className="sidebar-logout">
-              <button>
-                <span>Logout</span>
-                <img src="../../public/Images/logout.png" alt="" />
+              <button onClick={logout} disabled={loading}>
+                <span>{loading ? "Logging out" : "Logout"}</span>
+                <img src="/Images/logout.png" alt="" />
               </button>
             </div>
           </div>

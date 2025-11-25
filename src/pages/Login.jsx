@@ -49,7 +49,7 @@ function Login() {
     <div className="background-login">
       <div className="login">
         <div className="login-bg">
-          <img src="../../public/Images/Login.jpg" alt="Login Background" />
+          <img src="/Images/Login.jpg" alt="Login Background" />
         </div>
 
         <form className="form-login" onSubmit={handleLogin}>
