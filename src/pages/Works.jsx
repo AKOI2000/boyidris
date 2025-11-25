@@ -55,7 +55,7 @@ function Works() {
         </div>
 
         <div className="portfolio-works">
-          {works.map((work) => (
+          {works?.map((work) => (
             <Link to={`/work/${work.slug}`} key={work.id} className="portfolio-work">
               <div className="img-box">
                 <img src={work.images[0]} alt={`Idris for ${work.alt}`} />
