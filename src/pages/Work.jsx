@@ -48,45 +48,47 @@ function Work() {
 
   return (
     <>
-     if (work.title) {
-      <Helmet>
-      <title>{work?.title} – Idris Abayomi Portfolio</title>
-      <meta name="description" content={work?.description} />
-      <meta name="keywords" content={`${work?.service}, 3D Design, Graphic Design, Drone Videography, Portfolio`} />
-      <meta name="author" content="Idris Abayomi" />
-      <meta name="robots" content="index, follow" />
-
-      {/* Open Graph */}
-      <meta property="og:title" content={`${work?.title} – Idris Abayomi Portfolio`} />
-      <meta property="og:description" content={work?.description} />
-      <meta property="og:image" content={work?.images[0]} />
-      <meta property="og:url" content={`https://boyidris.vercel.app/work/${slug}`} />
-      <meta property="og:type" content="website" />
-
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={`${work?.title} – Idris Abayomi Portfolio`} />
-      <meta name="twitter:description" content={work?.description} />
-      <meta name="twitter:image" content={work?.images[0]} />
-
-      {/* JSON-LD */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          "name": work.title,
-          "creator": {
-            "@type": "Person",
-            "name": "Idris Abayomi",
-            "url": "https://boyidris.vercel.app/about"
-          },
-          "image": work.image,
-          "description": work.description,
-          "url": `https://boyidris.vercel.app/work/${slug}`
-        })}
-      </script>
-    </Helmet>
-     }
+    { work?.title &&
+      (
+        <Helmet>
+        <title>{work?.title} – Idris Abayomi Portfolio</title>
+        <meta name="description" content={work?.description} />
+        <meta name="keywords" content={`${work?.service}, 3D Design, Graphic Design, Drone Videography, Portfolio`} />
+        <meta name="author" content="Idris Abayomi" />
+        <meta name="robots" content="index, follow" />
+  
+        {/* Open Graph */}
+        <meta property="og:title" content={`${work?.title} – Idris Abayomi Portfolio`} />
+        <meta property="og:description" content={work?.description} />
+        <meta property="og:image" content={work?.images[0]} />
+        <meta property="og:url" content={`https://boyidris.vercel.app/work/${slug}`} />
+        <meta property="og:type" content="website" />
+  
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${work?.title} – Idris Abayomi Portfolio`} />
+        <meta name="twitter:description" content={work?.description} />
+        <meta name="twitter:image" content={work?.images[0]} />
+  
+        {/* JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "name": work?.title,
+            "creator": {
+              "@type": "Person",
+              "name": "Idris Abayomi",
+              "url": "https://boyidris.vercel.app/about"
+            },
+            "image": work.image,
+            "description": work.description,
+            "url": `https://boyidris.vercel.app/work/${slug}`
+          })}
+        </script>
+      </Helmet>
+       )
+    }
     <div className="single-work">
       <Navbar />
       <SubHero>
