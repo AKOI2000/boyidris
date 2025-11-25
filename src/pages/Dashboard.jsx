@@ -9,7 +9,11 @@ function Dashboard() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("https://boyidrisbe.onrender.com/admin/logout");
+      const res = await fetch("https://boyidrisbe.onrender.com/admin/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {"Content-Type": "application/json"},
+      });
       if (!res.ok) throw new Error("Error Logging out");
       const data = await res.json();
       console.log(data);
@@ -36,7 +40,7 @@ function Dashboard() {
             <div className="sidebar-links">
               <NavLink to="/dashboard/works">
                 <span>Works</span>
-                <img src="/Images/Works.png" alt="" />
+                <img src="/Images/works.png" alt="" />
               </NavLink>
               <NavLink to="/dashboard/experience">
                 <span>Experience</span>
