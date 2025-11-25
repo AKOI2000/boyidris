@@ -112,7 +112,7 @@ function About() {
 
       <div className="container-short">
         <div className="img-box">
-          <img src="../../public/Images/BOYIDRIS.jpg" loading="lazy" alt="" />
+          <img src="/Images/BOYIDRIS.jpg" loading="lazy" alt="" />
         </div>
       </div>
 
