@@ -11,7 +11,7 @@ function Dashboard() {
           <div className="sidebar-container">
             <div className="sidebar-logo-box">
               <div className="sidebar-logo">
-                {/* <img src="/Images/logo.png" alt="Boy Idris" /> */}
+                {/* <img src="../../public/Images/logo.png" alt="Boy Idris" /> */}
                 Idris
               </div>
               <button onClick={() => setOpen((open) => !open)}>&times;</button>
@@ -20,22 +20,22 @@ function Dashboard() {
             <div className="sidebar-links">
               <NavLink to="/dashboard/works">
                 <span>Works</span>
-                <img src="/Images/Works.png" alt="" />
+                <img src="../../public/Images/Works.png" alt="" />
               </NavLink>
               <NavLink to="/dashboard/experience">
                 <span>Experience</span>
-                <img src="/Images/user-experience.png" alt="" />
+                <img src="../../public/Images/user-experience.png" alt="" />
               </NavLink>
               <NavLink to="/dashboard/clients">
                 <span>Clients</span>
-                <img src="/Images/Clients.png" alt="" />
+                <img src="../../public/Images/Clients.png" alt="" />
               </NavLink>
             </div>
 
             <div className="sidebar-logout">
               <button>
                 <span>Logout</span>
-                <img src="/Images/logout.png" alt="" />
+                <img src="../../public/Images/logout.png" alt="" />
               </button>
             </div>
           </div>

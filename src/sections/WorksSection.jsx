@@ -71,7 +71,7 @@ export default function WorksSection() {
         <WorkCard
           direction={"/work"}
           id="2"
-          bg="/Images/abeokuta.jpg"
+          bg="../../public/Images/abeokuta.jpg"
           title="Studio Mockup"
           desc="Interior and lighting concept"
           active={active}
@@ -80,7 +80,7 @@ export default function WorksSection() {
         <WorkCard
           direction={"/work"}
           id="3"
-          bg="/Images/konfamCard.jpg"
+          bg="../../public/Images/konfamCard.jpg"
           title="Business Card Design"
           desc="Minimal layout for brand stationery"
           active={active}

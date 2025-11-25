@@ -23,6 +23,7 @@ function Login() {
       });
 
       const data = await res.json();
+      console.log(data);
 
       if (data.success) {
         navigate("/dashboard"); // redirect on success
@@ -48,7 +49,7 @@ function Login() {
     <div className="background-login">
       <div className="login">
         <div className="login-bg">
-          <img src="/Images/Login.jpg" alt="Login Background" />
+          <img src="../../public/Images/Login.jpg" alt="Login Background" />
         </div>
 
         <form className="form-login" onSubmit={handleLogin}>
