@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +22,7 @@ function Dashboard() {
       console.log(error);
     } finally {
       setLoading(false);
+      navigate("/login")
     }
   }
 
