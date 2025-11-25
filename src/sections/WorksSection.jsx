@@ -71,7 +71,7 @@ export default function WorksSection() {
         <WorkCard
           direction={"/work"}
           id="2"
-          bg="../../public/Images/abeokuta.jpg"
+          bg="/Images/abeokuta.jpg"
           title="Studio Mockup"
           desc="Interior and lighting concept"
           active={active}
@@ -80,7 +80,7 @@ export default function WorksSection() {
         <WorkCard
           direction={"/work"}
           id="3"
-          bg="../../public/Images/konfamCard.jpg"
+          bg="/Images/konfamCard.jpg"
           title="Business Card Design"
           desc="Minimal layout for brand stationery"
           active={active}
@@ -118,10 +118,10 @@ export default function WorksSection() {
 
       <div className="ctrl-box">
         <button className="scroll-btn left" onClick={() => scroll("prev")}>
-          <img src="../../public/Images/Button_right_arrow_label.png" alt="" />
+          <img src="/Images/Button_right_arrow_label.png" alt="" />
         </button>
         <button className="scroll-btn right" onClick={() => scroll("next")}>
-        <img src="../../public/Images/Button_right_arrow_label.png" alt="" />
+        <img src="/Images/Button_right_arrow_label.png" alt="" />
         </button>
       </div>
       <br />

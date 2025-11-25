@@ -32,11 +32,11 @@ const faqs = [
     title: "Tools & Stack",
     text: "My workflow runs on Blender for 3D design and animation, Photoshop, Illustrator, and CorelDRAW for graphics, and DJI Fly for aerial captures — the essentials behind every visual I create.",
     stack: [
-        "/public/Images/blender-2.svg",
-        "/public/Images/adobe-illustrator-cc-3.svg",
-        "/public/Images/adobe-photoshop-2.svg",
-        "/public/Images/Coreldraw.png",
-        "/public/Images/dji-3.svg"
+        "/Images/blender-2.svg",
+        "/Images/adobe-illustrator-cc-3.svg",
+        "/Images/adobe-photoshop-2.svg",
+        "/Images/Coreldraw.png",
+        "/Images/dji-3.svg"
     ]
   },
 ];
