@@ -48,7 +48,8 @@ function Work() {
 
   return (
     <>
-     <Helmet>
+     if (work.title) {
+      <Helmet>
       <title>{work?.title} – Idris Abayomi Portfolio</title>
       <meta name="description" content={work?.description} />
       <meta name="keywords" content={`${work?.service}, 3D Design, Graphic Design, Drone Videography, Portfolio`} />
@@ -85,6 +86,7 @@ function Work() {
         })}
       </script>
     </Helmet>
+     }
     <div className="single-work">
       <Navbar />
       <SubHero>
