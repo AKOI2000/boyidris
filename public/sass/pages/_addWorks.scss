@@ -1,0 +1,53 @@
+.admin-work-lists{
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 3rem;
+    margin-bottom: 4rem;
+
+    @include respond(lg) {
+      grid-template-columns: 1fr;
+      margin-bottom: 5rem;
+      column-gap: 0;
+      row-gap: 2rem;
+    }
+
+    li {
+      display: flex;
+      gap: 1rem;
+      border: 1px solid $color-grey;
+      padding: 1rem;
+      background: $color-black;
+      align-items: center;
+      height: 200px;
+      .img-box {
+        flex-basis: 40%;
+        height: 100%;
+        
+        img {
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+      .text-box {
+        flex: 1;
+        h5 {
+          font-size: 2.4rem;
+          font-weight: 500;
+          margin-bottom: 2%;
+        }
+        p {
+          font-size: 1.2rem;
+          margin-bottom: 3%;
+          font-weight: 300;
+          color: $color-grey;
+        }
+      }
+      .button-box {
+        display: flex;
+        gap: 3%;
+      }
+    }
+  }
+}

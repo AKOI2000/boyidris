@@ -1,0 +1,62 @@
+.contact-me {
+  .contact_message {
+     
+
+
+    h2 {
+      font-size: 3rem;
+      font-weight: 300;
+      text-align: center;
+      width: 90%;
+      margin: auto;
+      padding: 5rem 0;
+      color: $color-grey;
+
+      @include respond (sm) {
+        font-size: 2.5rem;
+      }
+    }
+  }
+
+  .contact{
+
+    .contact_contact{
+        padding-bottom: 10rem;
+        border-bottom: 2px solid $color-dark;
+    }
+
+    .contact_socials{
+        padding-top: 10rem;
+    }
+
+    .contact_contact, .contact_socials{
+       
+        ul{
+            // padding: 2rem 0;
+            li{
+                font-size: 3rem;
+                font-weight: 500;
+                padding: 4rem 0;
+                
+                &:not(:last-child) {
+                    border-bottom: 2px solid $color-dark;
+                }
+                
+
+                a{
+                    color: $color-white;
+                    transition: all .2s ease;
+
+                    &:focus, &:hover{
+                        color: $color-grey;
+                    }
+                }
+            }
+        }
+    }
+  }
+}
+
+.container-mg{
+    border-bottom: 2px solid $color-dark;
+}

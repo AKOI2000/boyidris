@@ -1,0 +1,43 @@
+.hero{
+    height: calc(100dvh - 2rem);
+    border-radius:  15px ;
+    margin: 2rem 2rem 0rem;
+    background-color: $color-dark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    color: $color-white;
+
+    @include respond (md) {
+        padding: 0 1rem;
+    }
+
+    @include respond(sm){
+        height: 100dvh;
+        margin: 0;
+        border-radius: 0;
+        padding: 0 1.5rem;
+        // height: 80dvh;
+    }
+
+
+    &-text{
+        margin-top: 5rem;
+        margin-bottom: 2rem;
+
+        @include respond(sm){
+            margin-top: 3rem;
+        }
+
+        
+        &_main, &_sub{
+            display: block;
+        }
+
+       
+
+
+    }
+}

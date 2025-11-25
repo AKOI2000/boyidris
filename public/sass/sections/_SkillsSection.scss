@@ -1,0 +1,105 @@
+.skills-section {
+  .accordion{
+    width: 100%;
+ 
+    .header-box{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        
+
+        p{
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .title{
+            font-size: 2.4rem;
+        }
+    }
+
+    .content-box{
+        font-size: 1.8rem;
+        font-weight: 300;
+        color: $color-grey;
+        padding: 1rem 0;
+
+        .stack{
+            display: flex;
+            justify-content: center;
+            width: 85%;
+            margin: auto;
+            gap: 2rem;
+            margin-top: 4rem;
+
+            @include respond (sm) {
+                width: 95%;
+            }
+
+          .img-box{
+            width: 19%;
+            text-align: center;
+
+            img{
+                width: 80%;
+                height: 100%;
+                object-fit: contain;
+
+                @include respond (sm) {
+                    width: 100%;
+                }
+            }
+          }
+        }
+    }
+
+
+    .item{
+        border-bottom: 1px solid $color-white;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+  
+
+    .item.close{
+        width: 100%;
+        padding: 2rem;
+        position: relative;
+        cursor: pointer;
+        
+        .content-box{
+           visibility: hidden;
+           transform: translateY(-.5rem);
+           opacity: 0;
+           position: absolute;
+        }
+    }
+
+    .item.open{
+        width: 100%;
+        padding: 2rem;
+        position: relative;
+        cursor: pointer;
+
+        .header-box{
+            margin-bottom: 2rem;
+        }
+        
+        .content-box{
+            transition: all 1s;
+            visibility: visible;
+            transform: translateY(0rem);
+            opacity: 1;
+            position: relative;
+
+         
+        }
+    }
+}
+
+  
+}
+
+

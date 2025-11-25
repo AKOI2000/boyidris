@@ -1,0 +1,28 @@
+$breakpoints: (
+  xs: 360px,
+  smd: 400px,
+  sm: 480px,
+  mds: 608px,
+  mdm: 650px,
+  md: 768px,
+  mdl: 880px,
+  lg: 1024px,
+  lg1: 1025px,
+  xl: 1280px,
+  xxl: 1440px,
+  xxxl: 2000px
+);
+
+$font-text-rounded: 'HelveticaRounded';
+$font-text: 'Helvetica';
+
+
+$color-black: #050505;
+$color-dark: #1a1a1a;
+$color-grey: #c2c3cd;
+$color-white: #e5e5e5;
+$color-orange: #ff7a00;
+$color-tertiary: #f4fa94;
+$color-bg: #0a192f;
+$color-cyan: #00b8d9;
+$color-neutral: #f4f6f8;

@@ -1,0 +1,73 @@
+.single-work{
+    &_text{
+        margin-bottom: 6rem;
+
+        .section_heading{
+            padding-bottom: 2rem;
+            border-bottom: 1px solid $color-dark;
+        }
+
+        .col-1-of-2{
+            row-gap: 6rem;
+        }
+
+        .project-details{
+            hr{
+                border: 0;
+                border-bottom: 1px solid $color-dark;
+            } 
+
+            .project-block{
+                display: flex;
+                align-items: center;
+                padding: 2rem 1rem;
+
+
+                &-header{
+                    width: 25%;
+                    h4{
+                        font-size: 2.1rem;
+                        font-weight: 500;
+                        color: $color-white;
+                    }
+                }
+                &-body{
+                    h5{
+                        font-size: 1.8rem;
+                        font-weight: 300;
+                        color: $color-grey;
+                    }
+                }
+            }
+        }
+
+        .project-description{
+            &_text{
+                padding: 2rem 1rem;
+                p{
+                    color: $color-grey;
+                    font-weight: 300;
+                    font-size: 1.8rem;
+                    line-height: 1.4;
+                }
+            }
+        }
+    }
+
+    &-imgs{
+        display: grid;
+        row-gap: 2rem;
+        column-gap: 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        @include respond (mds) {
+            grid-template-columns: 1fr;
+        }
+        .single-work-img-box{
+            min-height: 320px;
+            max-height: 400px;
+            img{
+                object-fit: cover;
+            }
+        }
+    }
+}

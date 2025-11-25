@@ -1,0 +1,35 @@
+@import "./base/reset";
+@import "./base/typographyfontface";
+@import "./base/typography";
+
+
+@import "./layout/grid";
+
+@import "./animations/animation";
+
+
+@import "./components/button";
+@import "./components/navbar";
+@import "./components/workCard";
+@import "./components/popup";
+@import "./components/form";
+
+@import "./pages/about";
+@import "./pages/contact";
+@import "./pages/works";
+@import "./pages/work";
+
+@import "./pages/dashboard";
+@import "./pages/addWorks";
+@import "./pages/clients";
+@import "./pages/experience";
+
+@import "./sections/hero";
+@import "./sections/works";
+@import "./sections/aboutSection";
+@import "./sections/SkillsSection";
+@import "./sections/footer";
+
+
+@import "./utilities/mixin";
+@import "./utilities/variables";

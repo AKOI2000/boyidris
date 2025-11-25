@@ -1,0 +1,79 @@
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    // gap: 1rem;
+    // padding: 2rem;
+    margin: 3rem 0 1rem;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    cursor: grab;
+    
+  }
+  
+  .carousel::-webkit-scrollbar {
+    display: none;
+    cursor: grabbing;
+  }
+
+  .carousel-wrapper{
+    position: relative;
+    margin: 2rem;
+    padding: 7rem 6%;
+    border-radius: 20px;
+    background-color: $color-dark;
+
+    @include respond(sm){
+      padding: 7rem 3rem;
+      margin: 2rem 0;
+      border-radius: 0;
+    }
+
+    @include respond (xs) {
+      padding: 7rem 2rem;
+    }
+  }
+
+
+  .ctrl-box{
+    position: absolute;
+    top: 6.8%;
+    right: 6%;
+
+    @include respond (md) {
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+      width: 85%;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+
+    .left{
+      margin-right: .5rem;
+
+      img{
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+.scroll-btn{
+  background: transparent;
+  border: 0;
+  width: 40%;
+  transition: all .2s;
+  cursor: pointer;
+  &:hover{
+    filter: brightness(70%);
+  }
+ 
+  @include respond (md) {
+    width: 7%;
+  }
+
+  @include respond (sm) {
+    width: 8%;
+  }
+}

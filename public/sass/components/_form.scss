@@ -1,0 +1,269 @@
+.form-work {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+ 
+  .title {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    padding: 1rem 2rem;
+    height: 60px;
+
+    &:placeholder-shown {
+      font-size: 1.5rem;
+      font-family: $font-text;
+      font-weight: 500;
+    }
+  }
+  .description {
+    grid-row: 2/3;
+    grid-column: 1/-1;
+    padding: 1rem 2rem;
+    height: 250px;
+    padding: 1rem 2rem;
+
+    &:placeholder-shown {
+      font-size: 1.5rem;
+      font-family: $font-text;
+      font-weight: 500;
+    }
+  }
+  .tags {
+    grid-row: 1/2;
+    grid-column: 2/-1;
+    padding: 1rem 2rem;
+
+    &:placeholder-shown {
+      font-size: 1.5rem;
+      font-family: $font-text;
+      font-weight: 500;
+    }
+  }
+  .file {
+    font-size: 1.8rem;
+    padding: 1rem 0rem;
+  }
+}
+
+.form-experience,
+.form-client {
+  display: flex;
+  flex-direction: column;
+  padding-top: 3rem;
+
+  input {
+    padding: 1.5rem 2rem;
+    font-weight: 300;
+    font-family: $font-text;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    &:placeholder-shown {
+      font-size: 1.7rem;
+      font-weight: 300;
+    }
+  }
+
+  small{
+    margin-bottom: 2rem;
+    margin-top: 0;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  small.error{
+    color: red;
+  }
+
+  small.success{
+    color: green;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}
+
+.form-btn {
+  grid-column: 1/-1;
+  background-color: $color-black;
+  color: $color-white;
+  padding: 1.5rem 2rem;
+  font-size: 2rem;
+  font-weight: 500;
+  border: 0;
+  border-radius: 3px;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.01);
+    color: $color-grey;
+    background: $color-dark;
+  }
+}
+
+.form-heading {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.form-back {
+  position: absolute;
+  right: 4%;
+  top: 5%;
+  background: $color-black;
+  color: $color-white;
+  border-radius: 5rem;
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.background-login{
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(30px);
+    background-color: rgba($color-white, .7);
+}
+
+// textarea{
+//   border: none;
+// }
+
+// label{
+//   display: none;
+// }
+
+
+.login{
+    height: 70dvh;
+    width: 60%;
+    display: flex;
+    background-color: $color-white;
+
+    .login-bg{
+        width: 50%;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .form-login{
+        width: 50%;
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        padding: 4rem;
+        label{
+            color: $color-black;
+            font-size: 1.8rem;
+            margin-bottom: .5rem;
+            font-weight: 300;
+            text-align: right;
+
+            &:not(:first-child) {
+                margin-top: 2rem;
+            }
+        }
+
+        .password-box{
+          position: relative;
+
+            input{
+                width: 100%;
+            }
+
+            button{
+                border: 0;
+                position: absolute;
+                right: 4%;
+                top: -7%;
+
+            }
+        }
+
+        small{
+            color: red;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        input{
+            padding: 1.5rem 2rem;
+            border: none;
+            border-radius: .5rem;
+        }
+
+        button{
+            margin-top: 2rem;
+        }
+    }
+}
+
+form{
+  small{
+    margin-bottom: 2rem;
+    margin-top: 0;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  input, textarea{
+    font-family: $font-text;
+
+    &:placeholder-shown{
+      font-family: $font-text;
+
+    }
+  }
+
+  small.error{
+    color: red;
+  }
+
+  small.success{
+    color: green;
+  }
+}
+
+
+.delete-section_buttons{
+  margin-top: 3rem;
+  display: flex;
+  gap: 1rem;
+
+  .cancel, .confirm{
+    padding: 1rem 2rem;
+    border: none;
+    font-size: 2rem;
+    border-radius: 5px;
+  }
+
+  .cancel{
+    background-color: $color-white;
+    color: $color-black;
+  }
+
+  .confirm{
+    background-color: $color-black;
+    color: $color-white;
+  }
+
+
+  
+}
