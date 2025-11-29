@@ -5,6 +5,7 @@ import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import Loading from "../component/Loading";
 
 function Work() {
   const [work, setWork] = useState({});
@@ -96,61 +97,65 @@ function Work() {
         <span>{work.title}</span>
       </SubHero>
 
-      <div className="container">
-        <div className="single-work_text">
-          <div className="grid col-1-of-2 column-gap-md">
-            <div className="project-details">
-              <SectionHeading>Project Details</SectionHeading>
-              <div className="project-block">
-                <div className="project-block-header">
-                  <h4>Date:</h4>
-                </div>
-                <div className="project-block-body">
-                 {work.created_at ? <h5>{formatDate(work.created_at)}</h5> : <h5></h5>}
-                </div>
-              </div>
+      {loading && <Loading />}
 
-              <hr />
-              <div className="project-block">
-                <div className="project-block-header">
-                  <h4>Client:</h4>
-                </div>
-                <div className="project-block-body">
-                  <h5>{work.title}</h5>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="project-block">
-                <div className="project-block-header">
-                  <h4>Service</h4>
-                </div>
-                <div className="project-block-body">
-                  <h5>{work.tags}</h5>
-                </div>
-              </div>
-
-              <hr />
-            </div>
-
-            <div className="project-description">
-              <SectionHeading>Project Description</SectionHeading>
-              <div className="project-description_text">
-                <p>{work.description}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="single-work-imgs">
-          {work?.images?.map((image) => (
-            <div className="single-work-img-box">
-              <img src={image} alt="" loading="lazy"/>
-            </div>
-          ))}
-        </div>
-      </div>
+      {!loading && (
+         <div className="container">
+         <div className="single-work_text">
+           <div className="grid col-1-of-2 column-gap-md">
+             <div className="project-details">
+               <SectionHeading>Project Details</SectionHeading>
+               <div className="project-block">
+                 <div className="project-block-header">
+                   <h4>Date:</h4>
+                 </div>
+                 <div className="project-block-body">
+                  {work.created_at ? <h5>{formatDate(work.created_at)}</h5> : <h5></h5>}
+                 </div>
+               </div>
+ 
+               <hr />
+               <div className="project-block">
+                 <div className="project-block-header">
+                   <h4>Client:</h4>
+                 </div>
+                 <div className="project-block-body">
+                   <h5>{work.title}</h5>
+                 </div>
+               </div>
+ 
+               <hr />
+ 
+               <div className="project-block">
+                 <div className="project-block-header">
+                   <h4>Service</h4>
+                 </div>
+                 <div className="project-block-body">
+                   <h5>{work.tags}</h5>
+                 </div>
+               </div>
+ 
+               <hr />
+             </div>
+ 
+             <div className="project-description">
+               <SectionHeading>Project Description</SectionHeading>
+               <div className="project-description_text">
+                 <p>{work.description}</p>
+               </div>
+             </div>
+           </div>
+         </div>
+ 
+         <div className="single-work-imgs">
+           {work?.images?.map((image) => (
+             <div className="single-work-img-box">
+               <img src={image} alt="" loading="lazy"/>
+             </div>
+           ))}
+         </div>
+       </div>
+      )}
 
       <Footer />
     </div>

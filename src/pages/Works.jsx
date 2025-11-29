@@ -5,12 +5,13 @@ import Footer from "../sections/Footer";
 import Navbar from "../component/Navbar";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import Loading from "../component/Loading";
 
 function Works() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
   const [works, setWorks] = useState([]);
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   function onPageChange(action) {
@@ -99,7 +100,7 @@ function Works() {
       <div className="portfolio">
         <Navbar />
         <div className="container">
-          <div className="portfolio-header">
+        <div className="portfolio-header">
             <SectionHeading>Projects</SectionHeading>
             <h5>
               Every project delivered is a reflection of commitment to quality,
@@ -108,7 +109,8 @@ function Works() {
           </div>
 
           <div className="portfolio-works">
-            {works?.map((work) => (
+            {!loading && <Loading />}
+          {!loading && works?.map((work) => (
               <Link
                 to={`/work/${work.slug}`}
                 key={work.id}
@@ -124,7 +126,7 @@ function Works() {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {!loading && totalPages > 1 && (
             <div className="pages-box">
               <Pagination
                 currentPage={Number(page)}

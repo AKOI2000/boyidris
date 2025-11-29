@@ -4,6 +4,7 @@ import SectionHeading from "../component/SectionHeading";
 import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
 import { Helmet } from "react-helmet-async";
+import Loading from "../component/Loading";
 
 function About() {
   const [clients, setClients] = useState([]);
@@ -183,7 +184,10 @@ function About() {
           <div className="container">
             <div className="grid col-1-of-2 column-gap-md">
               <SectionHeading>Experience</SectionHeading>
-              <ul>
+            
+            {loading && <Loading />}
+              {!loading && (
+                <ul>
                 {experiences?.map((experience) => (
                   <li>
                     <h4>{experience.companyname}</h4>
@@ -198,6 +202,7 @@ function About() {
                   </li>
                 ))}
               </ul>
+              )}
             </div>
           </div>
         </div>
@@ -215,7 +220,7 @@ function About() {
               )}
 
               {clientError && <p>{clientError}</p>}
-              {clientLoading && <p>Loading...</p>}
+              {clientLoading && <Loading />}
             </div>
           </div>
         </div>
