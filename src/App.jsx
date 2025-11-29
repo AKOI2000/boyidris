@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { HelmetProvider } from "react-helmet-async";
+import Loading from "./component/Loading";
 // import DeleteClient from "./pages/DeleteClient";
 // import DeleteWorks from "./pages/DeleteWorks";
 // import DeleteExperience from "./pages/DeleteExperience";
@@ -32,7 +33,7 @@ function App() {
   return (
     <>
       <HelmetProvider>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
