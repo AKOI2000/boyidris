@@ -109,7 +109,7 @@ function Works() {
           </div>
 
           <div className="portfolio-works">
-            {!loading && <Loading />}
+            {loading && <Loading />}
           {!loading && works?.map((work) => (
               <Link
                 to={`/work/${work.slug}`}
