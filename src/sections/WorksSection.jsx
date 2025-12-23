@@ -29,8 +29,9 @@ export default function WorksSection() {
 
   // Intersection observer
   useEffect(() => {
-    if (!carouselRef.current || cardRefs.current.length === 0) return;
-
+    if (!carouselRef.current) return;
+    if (cardRefs.current.length === 0) return;
+  
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,15 +41,17 @@ export default function WorksSection() {
         });
       },
       {
-        root: carouselRef.current, // horizontal scroll container
+        root: carouselRef.current,
         threshold: 0.5,
       }
     );
-
+  
+    // Observe only non-null refs
     cardRefs.current.forEach((el) => el && observer.observe(el));
-
+  
     return () => observer.disconnect();
-  }, [featured, loading]);
+  }, [cardRefs.current.length]); // run effect whenever the number of refs changes
+  
 
   // Horizontal scroll
   const scroll = (dir) => {
