@@ -43,12 +43,18 @@ export default function WorksSection() {
           }
         });
       },
-      { threshold: 0.5 } // lower threshold for testing
+      {
+        root: carouselRef.current, // << important
+        threshold: 0.5,
+      }
     );
   
     refs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
   }, [loading, featured]);
+
+
+  
   
 
   const scroll = (dir) => {
