@@ -48,7 +48,7 @@ export default function WorksSection() {
 
     refs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [loading]);
 
   const scroll = (dir) => {
     const carousel = carouselRef.current;
