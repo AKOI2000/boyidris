@@ -1,27 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import WorkCard from "../component/WorkCard";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "../component/Button";
 import Loading from "../component/Loading";
 
 export default function WorksSection() {
+  const [active, setActive] = useState(null);
   const [featured, setFeatured] = useState([]);
-  const refs = useRef([]);
   const carouselRef = useRef(null);
+  const cardRefs = useRef([]);
   const [loading, setLoading] = useState(false);
 
+  // Fetch featured works
   useEffect(() => {
     async function getFeaturedWorks() {
       try {
         setLoading(true);
-        const res = await fetch("https://boyidrisserverless.vercel.app/api/works", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-  
+        const res = await fetch("https://boyidrisserverless.vercel.app/api/works");
         const data = await res.json();
-        console.log(data);
-  
         setFeatured(data.slice(0, 3));
       } catch (error) {
         console.error("error fetching", error);
@@ -29,15 +24,37 @@ export default function WorksSection() {
         setLoading(false);
       }
     }
-  
     getFeaturedWorks();
   }, []);
 
+  // Intersection observer
+  useEffect(() => {
+    if (!carouselRef.current || cardRefs.current.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.dataset.id);
+          }
+        });
+      },
+      {
+        root: carouselRef.current, // horizontal scroll container
+        threshold: 0.5,
+      }
+    );
+
+    cardRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [featured, loading]);
+
+  // Horizontal scroll
   const scroll = (dir) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-    const amount = dir === "next" ? 400 : -400; // adjust scroll distance
-    carousel.scrollBy({ left: amount, behavior: "smooth" });
+    if (!carouselRef.current) return;
+    const amount = dir === "next" ? 400 : -400;
+    carouselRef.current.scrollBy({ left: amount, behavior: "smooth" });
   };
 
   return (
@@ -46,30 +63,18 @@ export default function WorksSection() {
       {!loading && (
         <>
           <div className="carousel" ref={carouselRef}>
-            <WorkCard
-              direction={`/work/${featured[0]?.slug}`}
-              id="1"
-              bg={featured[0]?.images[0]}
-              title={featured[0]?.title}
-              desc={featured[0]?.description.substring(0, 120) + "..."}
-              innerRef={(el) => (refs.current[0] = el)}
-            />
-            <WorkCard
-              direction={`/work/${featured[1]?.slug}`}
-              id="2"
-              bg={featured[1]?.images[0]}
-              title={featured[1]?.title}
-              desc={featured[1]?.description.substring(0, 120) + "..."}
-              innerRef={(el) => (refs.current[1] = el)}
-            />
-            <WorkCard
-              direction={`/work/${featured[2]?.slug}`}
-              id="3"
-              bg={featured[2]?.images[0]}
-              title={featured[2]?.title}
-              desc={featured[2]?.description.substring(0, 120) + "..."}
-              innerRef={(el) => (refs.current[2] = el)}
-            />
+            {featured.map((work, index) => (
+              <WorkCard
+                key={work.slug}
+                id={`${index}`}
+                bg={work.images[0]}
+                title={work.title}
+                desc={work.description.substring(0, 120) + "..."}
+                direction={`/work/${work.slug}`}
+                active={active}
+                innerRef={(el) => (cardRefs.current[index] = el)}
+              />
+            ))}
           </div>
 
           <div className="ctrl-box">
@@ -80,7 +85,6 @@ export default function WorksSection() {
               <img src="/Images/Button_right_arrow_label.png" alt="" />
             </button>
           </div>
-          <br />
 
           <center>
             <Button direction={"/works"}>See all Works</Button>
