@@ -6,7 +6,7 @@ export default function WorkCard({ id, bg, title, desc, active, onClick, innerRe
         to={direction}
         data-id={id}
         ref={innerRef}
-        className={`slide-card ${active === id ? "active" : ""}`}
+        className="slide-card active"
         style={{ backgroundImage: `url(${bg})` }}
         onClick={onClick}
       >

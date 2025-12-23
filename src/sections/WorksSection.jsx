@@ -5,7 +5,6 @@ import Button from "../component/Button";
 import Loading from "../component/Loading";
 
 export default function WorksSection() {
-  const [active, setActive] = useState(null);
   const [featured, setFeatured] = useState([]);
   const refs = useRef([]);
   const carouselRef = useRef(null);
@@ -33,29 +32,6 @@ export default function WorksSection() {
   
     getFeaturedWorks();
   }, []);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(entry.target.dataset.id);
-          }
-        });
-      },
-      {
-        root: carouselRef.current, // << important
-        threshold: 0.5,
-      }
-    );
-  
-    refs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, [loading, featured]);
-
-
-  
-  
 
   const scroll = (dir) => {
     const carousel = carouselRef.current;
@@ -76,7 +52,6 @@ export default function WorksSection() {
               bg={featured[0]?.images[0]}
               title={featured[0]?.title}
               desc={featured[0]?.description.substring(0, 120) + "..."}
-              active={active}
               innerRef={(el) => (refs.current[0] = el)}
             />
             <WorkCard
@@ -85,7 +60,6 @@ export default function WorksSection() {
               bg={featured[1]?.images[0]}
               title={featured[1]?.title}
               desc={featured[1]?.description.substring(0, 120) + "..."}
-              active={active}
               innerRef={(el) => (refs.current[1] = el)}
             />
             <WorkCard
@@ -94,7 +68,6 @@ export default function WorksSection() {
               bg={featured[2]?.images[0]}
               title={featured[2]?.title}
               desc={featured[2]?.description.substring(0, 120) + "..."}
-              active={active}
               innerRef={(el) => (refs.current[2] = el)}
             />
           </div>
