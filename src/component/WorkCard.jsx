@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function WorkCard({ id, bg, title, desc, direction }) {
+export default function WorkCard({ bg, title, desc, direction }) {
   return (
     <Link
       to={direction}

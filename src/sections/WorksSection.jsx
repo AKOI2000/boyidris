@@ -6,7 +6,6 @@ import Loading from "../component/Loading";
 export default function WorksSection() {
   const [featured, setFeatured] = useState([]);
   const carouselRef = useRef(null);
-  const cardRefs = useRef([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch featured works
@@ -40,15 +39,13 @@ export default function WorksSection() {
       {!loading && (
         <>
           <div className="carousel" ref={carouselRef}>
-            {featured.map((work, index) => (
+            {featured.map((work) => (
               <WorkCard
                 key={work.slug}
-                id={`${index}`}
                 bg={work.images[0]}
                 title={work.title}
                 desc={work.description.substring(0, 120) + "..."}
                 direction={`/work/${work.slug}`}
-                innerRef={(el) => (cardRefs.current[index] = el)}
               />
             ))}
           </div>
