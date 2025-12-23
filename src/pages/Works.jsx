@@ -32,8 +32,8 @@ function Works() {
         if (!res.ok) throw new Error("unable to fetch, reload the page");
         const data = await res.json();
         console.log(data.data);
-        totalPages = data.pagination.total;
-        setWorks(data.data);
+        totalPages = data.totalPages;
+        setWorks(data.items);
       } catch (error) {
         setError(error.message);
       } finally {
