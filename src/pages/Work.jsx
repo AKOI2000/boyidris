@@ -33,7 +33,7 @@ function Work() {
         setLoading(false);
         setError("");
 
-        const res = await fetch(`https://boyidrisbe.onrender.com/work/${slug}`);
+        const res = await fetch(`https://boyidrisserverless.vercel.app/api/work?slug=${slug}`);
         if (!res.ok) throw new Error("Error fetching work, reload please");
         const data = await res.json();
         setWork(data);
