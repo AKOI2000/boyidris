@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 
-export default function WorkCard({ id, bg, title, desc, active, innerRef, direction }) {
+export default function WorkCard({ id, bg, title, desc, direction }) {
   return (
     <Link
       to={direction}
-      data-id={id}
-      ref={innerRef}
-      className={`slide-card ${active === id ? "active" : ""}`}
+      className={`slide-card active`}
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="card-overlay">

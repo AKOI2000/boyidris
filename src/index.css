@@ -156,6 +156,7 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  grid-column: 1/-1;
 }
 .loader-box .loader {
   width: 50px;
@@ -593,7 +594,6 @@ a {
 }
 
 .slide-card.active {
-  transform: scale(1);
   opacity: 1;
 }
 

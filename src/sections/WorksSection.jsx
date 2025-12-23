@@ -4,7 +4,6 @@ import Button from "../component/Button";
 import Loading from "../component/Loading";
 
 export default function WorksSection() {
-  const [active, setActive] = useState(null);
   const [featured, setFeatured] = useState([]);
   const carouselRef = useRef(null);
   const cardRefs = useRef([]);
@@ -26,31 +25,6 @@ export default function WorksSection() {
     }
     getFeaturedWorks();
   }, []);
-
-  // Intersection observer
-  useEffect(() => {
-    if (!carouselRef.current) return;
-    if (cardRefs.current.length === 0) return;
-  
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(entry.target.dataset.id);
-          }
-        });
-      },
-      {
-        root: carouselRef.current,
-        threshold: 0.5,
-      }
-    );
-  
-    // Observe only non-null refs
-    cardRefs.current.forEach((el) => el && observer.observe(el));
-  
-    return () => observer.disconnect();
-  }, [cardRefs.current.length]); // run effect whenever the number of refs changes
   
 
   // Horizontal scroll
@@ -74,7 +48,6 @@ export default function WorksSection() {
                 title={work.title}
                 desc={work.description.substring(0, 120) + "..."}
                 direction={`/work/${work.slug}`}
-                active={active}
                 innerRef={(el) => (cardRefs.current[index] = el)}
               />
             ))}
