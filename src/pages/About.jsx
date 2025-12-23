@@ -34,7 +34,7 @@ function About() {
     async function getExperiences() {
       try {
         setLoading(true);
-        const res = await fetch("https://boyidrisbe.onrender.com/experiences", {
+        const res = await fetch("https://boyidrisserverless.vercel.app/api/experiences", {
           headers: { "Content-Type": "application/json" },
           method: "GET",
         });
@@ -56,7 +56,7 @@ function About() {
       try {
         setClientLoading(true);
         setClientError("");
-        const result = await fetch("https://boyidrisbe.onrender.com/clients", {
+        const result = await fetch("https://boyidrisserverless.vercel.app/api/clients", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });

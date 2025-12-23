@@ -24,7 +24,7 @@ function Works() {
       try {
         setError("");
         setLoading(true);
-        const res = await fetch("https://boyidrisbe.onrender.com/works", {
+        const res = await fetch("https://boyidrisserverless.vercel.app/api/works", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });

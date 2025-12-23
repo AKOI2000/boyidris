@@ -15,24 +15,25 @@ export default function WorksSection() {
     async function getFeaturedWorks() {
       try {
         setLoading(true);
-        const res = await fetch("https://boyidrisbe.onrender.com/allworks", {
+        const res = await fetch("https://boyidrisserverless.vercel.app/api/works", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
-
+  
         const data = await res.json();
-
-        setFeatured([data[0], data[1], data[2]]);
+        console.log(data);
+  
+        setFeatured(data.slice(0, 3));
       } catch (error) {
         console.error("error fetching", error);
       } finally {
         setLoading(false);
       }
     }
-
+  
     getFeaturedWorks();
   }, []);
-
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
