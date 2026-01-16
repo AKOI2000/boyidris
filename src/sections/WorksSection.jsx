@@ -15,7 +15,7 @@ export default function WorksSection() {
         setLoading(true);
         const res = await fetch("https://boyidrisserverless.vercel.app/api/works");
         const data = await res.json();
-        setFeatured(data.items.slice(0, 3));
+        setFeatured(data.items?.slice(0, 3));
       } catch (error) {
         console.error("error fetching", error);
       } finally {

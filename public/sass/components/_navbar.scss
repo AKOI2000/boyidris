@@ -1,67 +1,135 @@
 @import "../utilities/mixin";
 @import "../utilities/variables";
 
+// .nav-container{
+//     position: fixed;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     top: 6%;
+//     // min-width: 30%;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     gap: .3rem;
+//     border-radius: 50px;
+//     background-color: rgba($color-black, 0.4);
+//     backdrop-filter: blur(10px);
+//     border: 1px solid rgba($color-white, 0.5);
+//     padding: 5px;
+//     z-index: 4000;
 
-.nav-container{
+//     @include respond (sm) {
+//         padding: 3px;
+//         gap: .2rem;
+//         top: 88%;
+//     }
+
+//     // @include respond (md) {
+//     //     max-width: 50%;
+//     // }
+
+//     // @include respond (sm) {
+//     //     max-width: 75%;
+//     // }
+
+//     // @include respond (xs) {
+//     //     max-width: 80%;
+//     // }
+
+//     .nav-link{
+//         flex-basis: 100%;
+//         padding: 1.3rem 2rem;
+//         color:$color-grey;
+//         font-size: 1.7rem;
+//         font-weight: 500;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         border-radius: 50px;
+//         transition: all .2s;
+//         font-family: $font-text;
+
+//         @include  respond(sm){
+//             padding: 1rem 1.5rem;
+//             font-size: 1.5rem;
+//         }
+//     }
+
+//     .nav-link.active{
+//         background:$color-grey;
+//         color:$color-dark;
+//         box-shadow: rgba(0, 0, 0, 0.25) 0px -50px 36px -28px inset;
+//     }
+// }
+
+.svg-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.nav-container {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
     top: 6%;
-    // min-width: 30%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: .3rem;
+    gap: 8px;
     border-radius: 50px;
-    background-color: rgba($color-black, 0.4);
-    backdrop-filter: blur(10px);
+    background-color: rgba($color-black, 0.3);
     border: 1px solid rgba($color-white, 0.5);
-    padding: 5px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    padding: 8px;
     z-index: 4000;
+    
+    /* THE MAGIC */
+    backdrop-filter: url(#jelly-backdrop) blur(1px) saturate(120%);
+    -webkit-backdrop-filter: url(#jelly-backdrop) blur(1px) saturate(120%);
 
-    @include respond (sm) {
-        padding: 3px;
-        gap: .2rem;
-        top: 88%;
+  @include respond(sm) {
+    padding: 3px;
+    gap: 0.2rem;
+    top: 88%;
+  }
+
+  // @include respond (md) {
+  //     max-width: 50%;
+  // }
+
+  // @include respond (sm) {
+  //     max-width: 75%;
+  // }
+
+  // @include respond (xs) {
+  //     max-width: 80%;
+  // }
+
+  .nav-link {
+    flex-basis: 100%;
+    padding: 1.3rem 2rem;
+    color: $color-grey;
+    font-size: 1.7rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    transition: all 0.2s;
+    font-family: $font-text;
+
+    @include respond(sm) {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
     }
+  }
 
-    // @include respond (md) {
-    //     max-width: 50%;
-    // }
-
-
-    // @include respond (sm) {
-    //     max-width: 75%;
-    // }
-
-    // @include respond (xs) {
-    //     max-width: 80%;
-    // }
-
-
-    .nav-link{
-        flex-basis: 100%;
-        padding: 1.3rem 2rem;
-        color:$color-grey;
-        font-size: 1.7rem;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50px;
-        transition: all .2s;
-        font-family: $font-text;
-
-        @include  respond(sm){
-            padding: 1rem 1.5rem;
-            font-size: 1.5rem;
-        }
-    }
-
-
-    .nav-link.active{
-        background:$color-grey;
-        color:$color-dark;
-        box-shadow: rgba(0, 0, 0, 0.25) 0px -50px 36px -28px inset;
-    }
+  .nav-link.active {
+    background: $color-grey;
+    color: $color-dark;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px -50px 36px -28px inset;
+  }
 }
