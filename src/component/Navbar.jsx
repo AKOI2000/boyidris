@@ -14,6 +14,10 @@ function Navbar() {
   </defs>
 </svg> */}
 
+      <div className="logo-box">
+        <img src="/Images/boy_idris_logo-.png" alt="BoyIdris Logo" />
+      </div>
+
       <svg class="svg-filter" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter

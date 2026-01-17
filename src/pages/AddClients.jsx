@@ -17,7 +17,7 @@ function AddClients() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({client: client}),
           });
-          if (!res.ok) throw new Error("Couldn't added new client, try again")
+          if (!res.ok) throw new Error("Couldn't added new client, try again");
           const data = await res.json();
           setMessage(data.message)
         } catch (err) {
