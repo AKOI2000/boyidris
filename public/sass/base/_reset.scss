@@ -104,15 +104,17 @@ img {
   .img-box {
     height: 90dvh;
     width: 100%;
+    // aspect-ratio: 3/;
 
-    @include respond(sm) {
-      aspect-ratio: 16/9;
-    }
+    // @include respond(sm) {
+    //   aspect-ratio: 16/9;
+    // }
     img {
       border-radius: 5px;
       width: 100%;
       object-fit: cover;
-      display: block;
+      // object-position: center;
+      // display: block;
     }
   }
 
