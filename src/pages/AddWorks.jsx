@@ -15,7 +15,7 @@ function AddWorks() {
     e.preventDefault();
     setUploading(true);
     setMessage("");
-    navigate(-1)
+    
 
     try {
       const formData = new FormData();
@@ -34,6 +34,7 @@ function AddWorks() {
       if (data.success) {
         setMessage("Post uploaded successfully!");
         // console.log("Saved post:", data.post);
+        navigate(-1)
       } else {
         setMessage("Upload failed");
       }
