@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://boyidrisbe.onrender.com/admin/login", {
+      const res = await fetch(`${backend_url}/login`, {
         method: "POST",
         credentials: "include", // important for cookies
         headers: { "Content-Type": "application/json" },
@@ -23,7 +24,6 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.success) {
         navigate("/dashboard"); // redirect on success

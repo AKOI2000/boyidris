@@ -6,44 +6,48 @@ import Navbar from "../component/Navbar";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Loading from "../component/Loading";
+import { backend_url } from "../helpers/constants";
+import { useGetWorks } from "../Services/useWorks";
 
 function Works() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
-  const [works, setWorks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const [works, setWorks] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
 
-  function onPageChange(action) {
-    setSearchParams({ page: action });
-  }
-  let totalPages;
+  const { works, isPending } = useGetWorks();
 
-  useEffect(() => {
-    async function getWorks() {
-      try {
-        setError("");
-        setLoading(true);
-        const res = await fetch("https://boyidrisserverless.vercel.app/api/works", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+  // function onPageChange(action) {
+  //   setSearchParams({ page: action });
+  // }
+  // let totalPages;
 
-        if (!res.ok) throw new Error("unable to fetch, reload the page");
-        const data = await res.json();
-        console.log(data.data);
-        totalPages = data.totalPages;
-        setWorks(data.items);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
+  // useEffect(() => {
+  //   async function getWorks() {
+  //     try {
+  //       setError("");
+  //       setLoading(true);
+  //       const res = await fetch(`${backend_url}/api/works`, {
+  //         method: "GET",
+  //         headers: { "Content-Type": "application/json" },
+  //       });
 
-    getWorks();
-  }, []);
+  //       if (!res.ok) throw new Error("unable to fetch, reload the page");
+  //       const data = await res.json();
+  //       totalPages = data.totalPages;
+  //       setWorks(data.items);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
 
+  //   getWorks();
+  // }, []);
+
+  if (isPending) return <Loading />;
   return (
     <>
       <Helmet>
@@ -100,7 +104,7 @@ function Works() {
       <div className="portfolio">
         <Navbar />
         <div className="container">
-        <div className="portfolio-header">
+          <div className="portfolio-header">
             <SectionHeading>Projects</SectionHeading>
             <h5>
               Every project delivered is a reflection of commitment to quality,
@@ -109,8 +113,7 @@ function Works() {
           </div>
 
           <div className="portfolio-works">
-            {loading && <Loading />}
-          {!loading && works?.map((work) => (
+            {works?.map((work) => (
               <Link
                 to={`/work/${work.slug}`}
                 key={work.id}
@@ -126,7 +129,7 @@ function Works() {
             ))}
           </div>
 
-          {!loading && totalPages > 1 && (
+          {/* {!loading && totalPages > 1 && (
             <div className="pages-box">
               <Pagination
                 currentPage={Number(page)}
@@ -134,7 +137,7 @@ function Works() {
                 onPageChange={onPageChange}
               />
             </div>
-          )}
+          )} */}
         </div>
 
         <Footer />

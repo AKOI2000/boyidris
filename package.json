@@ -11,6 +11,7 @@
     "sass-dev": "sass --watch public/sass/main.scss:src/index.css"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.91.2",
     "axios": "^1.12.2",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.548.0",

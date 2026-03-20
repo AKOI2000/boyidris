@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import SectionHeading from "../component/SectionHeading";
 import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
 import { Helmet } from "react-helmet-async";
+import { useGetClients, useGetExperiences } from "../Services/useGetDetails";
 import Loading from "../component/Loading";
 
 function About() {
-  const [clients, setClients] = useState([]);
-  const [experiences, setExperiences] = useState([]);
-  const [clientLoading, setClientLoading] = useState(false);
-  const [clientError, setClientError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { isPending, experiences = {} } = useGetExperiences();
+  const { isPending: isPendingClients, clients = {} } = useGetClients();
+
+  // const { id, name } = clients;
+  // console.log(experiences, isPending);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -30,48 +29,7 @@ function About() {
     return formattedDate;
   }
 
-  useEffect(() => {
-    async function getExperiences() {
-      try {
-        setLoading(true);
-        const res = await fetch("https://boyidrisserverless.vercel.app/api/experiences", {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        });
-        if (!res.ok) throw new Error("Error fetching the experiences, reload");
-        const data = await res.json();
-        setExperiences(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getExperiences();
-  }, []);
-
-  useEffect(() => {
-    async function getClients() {
-      try {
-        setClientLoading(true);
-        setClientError("");
-        const result = await fetch("https://boyidrisserverless.vercel.app/api/clients", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!result.ok) throw new Error("Can't fetch clients");
-        const data = await result.json();
-
-        setClients(data);
-      } catch (err) {
-        setClientError(err.message);
-      } finally {
-        setClientLoading(false);
-      }
-    }
-    getClients();
-  }, []);
+  if (isPending || isPendingClients) return <Loading />;
 
   return (
     <>
@@ -184,12 +142,10 @@ function About() {
           <div className="container">
             <div className="grid col-1-of-2 column-gap-md">
               <SectionHeading>Experience</SectionHeading>
-            
-            {loading && <Loading />}
-              {!loading && (
-                <ul>
-                {experiences?.map((experience) => (
-                  <li>
+
+              <ul>
+                {experiences.map((experience) => (
+                  <li key={experience.id}>
                     <h4>{experience.companyname}</h4>
                     <h5>{experience.role}</h5>
                     <p>
@@ -202,7 +158,6 @@ function About() {
                   </li>
                 ))}
               </ul>
-              )}
             </div>
           </div>
         </div>
@@ -211,16 +166,11 @@ function About() {
           <div className="container">
             <div className="grid col-1-of-2 column-gap-md">
               <SectionHeading>Clients</SectionHeading>
-              {!clientError && !clientLoading && (
-                <ul>
-                  {clients.map((client) => (
-                    <li key={client.id}>{client.client}</li>
-                  ))}
-                </ul>
-              )}
-
-              {clientError && <p>{clientError}</p>}
-              {clientLoading && <Loading />}
+              <ul>
+                {clients.map((client) => (
+                  <li key={client.id}>{client.client}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

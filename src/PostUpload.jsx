@@ -1,42 +1,41 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
+import { backend_url } from "./helpers/constants";
 
 function PostUpload() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [tags, setTags] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
-    setMessage('');
+    setMessage("");
 
     try {
       const formData = new FormData();
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('tags', tags);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("tags", tags);
 
-      images.forEach((img) => formData.append('images', img));
+      images.forEach((img) => formData.append("images", img));
 
       const { data } = await axios.post(
-        'https://boyidrisbe.onrender.com/boy-admin/create',
+        `${backend_url}/boy-admin/create`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       if (data.success) {
-        setMessage('Post uploaded successfully!');
-        console.log('Saved post:', data.post);
+        setMessage("Post uploaded successfully!");
       } else {
-        setMessage('Upload failed');
+        setMessage("Upload failed");
       }
     } catch (err) {
-      console.error(err);
-      setMessage('Something went wrong');
+      setMessage("Something went wrong");
     } finally {
       setUploading(false);
     }
@@ -75,7 +74,7 @@ function PostUpload() {
       />
 
       <button type="submit" disabled={uploading}>
-        {uploading ? 'Uploading...' : 'Upload Post'}
+        {uploading ? "Uploading..." : "Upload Post"}
       </button>
 
       {message && <p>{message}</p>}

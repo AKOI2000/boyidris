@@ -2,6 +2,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import AdminHeading from "../component/AdminHeading";
 import AdminworkCard from "./AdminworkCard";
 import { useEffect, useState } from "react";
+import { backend_url } from "../helpers/constants";
 
 function AdminWorks() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function AdminWorks() {
      try {
       setLoading(true) 
       setError("")
-      const res = await fetch(`https://boyidrisbe.onrender.com/allworks`, {
+      const res = await fetch(`${backend_url}/allworks`, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
       });

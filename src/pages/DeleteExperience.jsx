@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function DeleteExperience() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function DeleteExperience() {
         e.preventDefault();
         navigate(-1)
         try {
-            const res = await fetch(`https://boyidrisbe.onrender.com/experience/delete/${id}`, {
+            const res = await fetch(`${backend_url}/experience/delete/${id}`, {
                method: "DELETE",
                headers:  {"Content-Type": "application/json"}
             })

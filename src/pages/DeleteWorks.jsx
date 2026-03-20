@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function DeleteWorks() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function DeleteWorks() {
         e.preventDefault();
         navigate(-1)
         try {
-            const res = await fetch(`https://boyidrisbe.onrender.com/work/delete/${slug}`, {
+            const res = await fetch(`${backend_url}/work/delete/${slug}`, {
                method: "DELETE",
                headers:  {"Content-Type": "application/json"}
             })

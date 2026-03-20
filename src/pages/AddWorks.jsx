@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function AddWorks() {
   const [title, setTitle] = useState("");
@@ -15,7 +16,6 @@ function AddWorks() {
     e.preventDefault();
     setUploading(true);
     setMessage("");
-    
 
     try {
       const formData = new FormData();
@@ -26,15 +26,15 @@ function AddWorks() {
       images.forEach((img) => formData.append("images", img));
 
       const { data } = await axios.post(
-        "https://boyidrisbe.onrender.com/work/create",
+        `${backend_url}/work/create`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       if (data.success) {
         setMessage("Post uploaded successfully!");
-        // console.log("Saved post:", data.post);
-        navigate(-1)
+        console.log("Saved post:", data.post);
+        navigate(-1);
       } else {
         setMessage("Upload failed");
       }
@@ -48,10 +48,11 @@ function AddWorks() {
 
   return (
     <>
-     <div className="form-back" onClick={()=> navigate(-1)}>&times;</div>
-     <h2 className="form-heading">Create New Post</h2>
+      <div className="form-back" onClick={() => navigate(-1)}>
+        &times;
+      </div>
+      <h2 className="form-heading">Create New Post</h2>
       <form onSubmit={handleSubmit} className="form-work">
-       
         <input
           className="title"
           type="text"

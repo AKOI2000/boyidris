@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -10,10 +11,10 @@ function Dashboard() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("https://boyidrisbe.onrender.com/admin/logout", {
+      const res = await fetch(`${backend_url}/logout`, {
         method: "POST",
         credentials: "include",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) throw new Error("Error Logging out");
       const data = await res.json();
@@ -22,7 +23,7 @@ function Dashboard() {
       console.log(error);
     } finally {
       setLoading(false);
-      navigate("/login")
+      navigate("/login");
     }
   }
 

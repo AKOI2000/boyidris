@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { HelmetProvider } from "react-helmet-async";
 import Loading from "./component/Loading";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import DeleteClient from "./pages/DeleteClient";
 // import DeleteWorks from "./pages/DeleteWorks";
 // import DeleteExperience from "./pages/DeleteExperience";
@@ -30,46 +31,56 @@ const DeleteWorks = lazy(() => import("./pages/DeleteWorks"));
 const DeleteExperience = lazy(() => import("./pages/DeleteExperience"));
 
 function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+      },
+    },
+  });
+
   return (
     <>
-      <HelmetProvider>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path={`/works`} element={<Works />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/work/:slug" element={<Work />} />
-            <Route path="/login" element={<Login />} />
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path={`/works`} element={<Works />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/work/:slug" element={<Work />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />}>
-                <Route index element={<Navigate replace to="Works" />} />
-                <Route path="clients" element={<Clients />} />
-                <Route path="Works" element={<AdminWorks />} />
-                <Route path="experience" element={<Experience />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<Dashboard />}>
+                  <Route index element={<Navigate replace to="Works" />} />
+                  <Route path="clients" element={<Clients />} />
+                  <Route path="Works" element={<AdminWorks />} />
+                  <Route path="experience" element={<Experience />} />
+                </Route>
+                <Route path="/admin" element={<Popup />}>
+                  <Route path="work/add" element={<AddWorks />} />
+                  <Route path="work/edit/:slug" element={<EditWorks />} />
+                  <Route path="work/delete/:slug" element={<DeleteWorks />} />
+                  <Route path="experience/add" element={<AddExperience />} />
+                  <Route
+                    path="experience/edit/:id"
+                    element={<EditExperience />}
+                  />
+                  <Route
+                    path="experience/delete/:id"
+                    element={<DeleteExperience />}
+                  />
+                  <Route path="client/add" element={<AddClients />} />
+                  <Route path="client/edit/:id" element={<EditClients />} />
+                  <Route path="client/delete/:id" element={<DeleteClient />} />
+                </Route>
               </Route>
-              <Route path="/admin" element={<Popup />}>
-                <Route path="work/add" element={<AddWorks />} />
-                <Route path="work/edit/:slug" element={<EditWorks />} />
-                <Route path="work/delete/:slug" element={<DeleteWorks />} />
-                <Route path="experience/add" element={<AddExperience />} />
-                <Route
-                  path="experience/edit/:id"
-                  element={<EditExperience />}
-                />
-                <Route
-                  path="experience/delete/:id"
-                  element={<DeleteExperience />}
-                />
-                <Route path="client/add" element={<AddClients />} />
-                <Route path="client/edit/:id" element={<EditClients />} />
-                <Route path="client/delete/:id" element={<DeleteClient />} />
-              </Route>
-            </Route>
-          </Routes>
-        </Suspense>
-      </HelmetProvider>
+            </Routes>
+          </Suspense>
+        </HelmetProvider>
+      </QueryClientProvider>
     </>
 
     // <PostUpload />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { backend_url } from "../helpers/constants";
 
 function EditExperience() {
   const navigate = useNavigate();
@@ -26,20 +27,20 @@ function EditExperience() {
     e.preventDefault();
 
     try {
-        setLoading(true);
-        const res = await fetch (`https://boyidrisbe.onrender.com/experience/edit/${id}`, {
-            method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({company, role, dateStart, dateEnd})
-        })
-        if (!res.ok) throw new Error ("Having trouble editing");
-        const data = await res.json();
-        console.log(data);
+      setLoading(true);
+      const res = await fetch(`${backend_url}/experience/edit/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ company, role, dateStart, dateEnd }),
+      });
+      if (!res.ok) throw new Error("Having trouble editing");
+      const data = await res.json();
+      console.log(data);
     } catch (error) {
-        setError(error.message)
+      setError(error.message);
     } finally {
-        setLoading(false)
-        navigate(-1)
+      setLoading(false);
+      navigate(-1);
     }
   }
 
@@ -48,7 +49,7 @@ function EditExperience() {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch(`https://boyidrisbe.onrender.com/experience/${id}`, {
+        const res = await fetch(`${backend_url}/experience/${id}`, {
           headers: { "Content-Type": "application/json" },
           method: "GET",
         });

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AdminHeading from "../component/AdminHeading";
 import AdminExperienceCard from "./AdminExperienceCard";
 import { useEffect, useState } from "react";
+import { backend_url } from "../helpers/constants";
 
 function Experience() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Experience() {
     async function getExperiences() {
       try {
         setLoading(true);
-        const res = await fetch("https://boyidrisbe.onrender.com/experiences", {
+        const res = await fetch(`${backend_url}/experiences`, {
           headers: {"Content-Type": "application/json"},
           method: "GET"
         })
