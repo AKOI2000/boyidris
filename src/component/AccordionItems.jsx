@@ -4,7 +4,7 @@ export default function AccordionItems({
   curOpen,
   onOpen,
   children,
-  stack
+  stack,
 }) {
   const isOpen = curOpen === index;
   function handleClick() {
@@ -35,16 +35,15 @@ export default function AccordionItems({
             <p className="icon">{isOpen ? "-" : "+"}</p>
           </div>
 
-          <div className="content-box"> 
+          <div className="content-box">
             {children}
             <div className="stack">
-            {stack.map(tool => (
-               <div className="img-box">
-                 <img src={tool} alt="" />
-               </div>
-                ))}
-          </div>
-
+              {stack.map((tool, index) => (
+                <div className="img-box" key={index}>
+                  <img src={tool} alt="" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

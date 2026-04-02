@@ -1,5 +1,5 @@
 // api/clients.js
-import pool from '../utils/db.js';
+import pool from './db.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://boyidris.vercel.app'); // restrict to your frontend

@@ -7,47 +7,22 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Loading from "../component/Loading";
 import { backend_url } from "../helpers/constants";
-import { useGetWorks } from "../Services/useWorks";
+import { useGetPaginatedWorks, useGetWorks } from "../Services/useWorks";
 
 function Works() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
-  // const [works, setWorks] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
 
-  const { works, isPending } = useGetWorks();
+  const { paginatedWorks, isFetching } = useGetPaginatedWorks();
 
-  // function onPageChange(action) {
-  //   setSearchParams({ page: action });
-  // }
-  // let totalPages;
+  if (isFetching) return <Loading />;
 
-  // useEffect(() => {
-  //   async function getWorks() {
-  //     try {
-  //       setError("");
-  //       setLoading(true);
-  //       const res = await fetch(`${backend_url}/api/works`, {
-  //         method: "GET",
-  //         headers: { "Content-Type": "application/json" },
-  //       });
+  const totalPages = paginatedWorks?.pagination.totalPages;
 
-  //       if (!res.ok) throw new Error("unable to fetch, reload the page");
-  //       const data = await res.json();
-  //       totalPages = data.totalPages;
-  //       setWorks(data.items);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
+  function onPageChange(action) {
+    setSearchParams({ page: action });
+  }
 
-  //   getWorks();
-  // }, []);
-
-  if (isPending) return <Loading />;
   return (
     <>
       <Helmet>
@@ -113,7 +88,7 @@ function Works() {
           </div>
 
           <div className="portfolio-works">
-            {works?.map((work) => (
+            {paginatedWorks?.data?.map((work) => (
               <Link
                 to={`/work/${work.slug}`}
                 key={work.id}
@@ -129,7 +104,7 @@ function Works() {
             ))}
           </div>
 
-          {/* {!loading && totalPages > 1 && (
+          {totalPages > 1 && (
             <div className="pages-box">
               <Pagination
                 currentPage={Number(page)}
@@ -137,7 +112,7 @@ function Works() {
                 onPageChange={onPageChange}
               />
             </div>
-          )} */}
+          )}
         </div>
 
         <Footer />

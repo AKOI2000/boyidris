@@ -1,54 +1,32 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { useNavigate } from "react-router-dom";
+import { useGetClient } from "../Services/useGetDetails";
+import Loading from "../component/Loading";
+import { useEditClient } from "../Services/useEditDetails";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 function EditClients() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { client, isPending } = useGetClient();
+  const { editClient, isPending: isEditing } = useEditClient();
+  const { register, handleSubmit, reset, formState } = useForm();
+  const { errors } = formState;
 
-  const [loading, setLoading] = useState(false);
-  const [error, setErrror] = useState("");
-  const [client, setClient] = useState("");
+  // console.log(client);
 
-  useEffect(() => {
-    async function getClient() {
-      try {
-        setLoading(true);
-        const res = await fetch(`${backend_url}/client/edit/${id}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!res.ok) throw new Error("Unable to fetch");
+  if (isPending) return <Loading />;
 
-        const data = await res.json();
-        setClient(data.client);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
+  function onSubmit(data) {
+    // console.log(data.client);
+    editClient(data.client, {
+      onSuccess: () => {
+        reset();
+        navigate(-1);
+      },
+    });
+  }
+  function onError() {
 
-    getClient();
-  }, [id]);
-
-  async function editClient(e) {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch(`${backend_url}/client/edit/${id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ client: client }),
-      });
-      if (!res.ok) throw new Error("Unable to edit the client, try again");
-    } catch (error) {
-      console.log(error.message);
-      setErrror(error.message);
-    } finally {
-      setLoading(false);
-      navigate(-1);
-    }
   }
 
   return (
@@ -58,19 +36,23 @@ function EditClients() {
         &times;
       </div>
 
-      <form className="form-client" onSubmit={editClient}>
+      <form className="form-client" onSubmit={handleSubmit(onSubmit, onError)}>
         <label htmlFor="client">Client</label>
         <input
           type="text"
           name="client"
-          id=""
-          value={client}
+          id="client"
           placeholder="Client Name.."
-          onChange={(e) => setClient(e.target.value)}
+          defaultValue={client.client}
+          {...register("client", {
+            required: "This field is required",
+          })}
+          disabled={isEditing}
         />
-        {error && <small>{error}</small>}
-        <button className="form-btn" disabled={loading}>
-          Submit
+
+        {errors && <small className="error">{errors?.client?.message}</small>}
+        <button className="form-btn" disabled={isPending || isEditing}>
+          {isEditing ? "Editing..." : "Edit"}
         </button>
       </form>
     </div>

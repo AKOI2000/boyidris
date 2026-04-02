@@ -1,38 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import AdminHeading from "../component/AdminHeading";
 import AdminExperienceCard from "./AdminExperienceCard";
-import { useEffect, useState } from "react";
-import { backend_url } from "../helpers/constants";
+import { useGetExperiences } from "../Services/useGetDetails";
+import Loading from "../component/Loading";
 
 function Experience() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState();
-  const [experiences, setExperiences] = useState();
+  const { experiences, isPending } = useGetExperiences();
 
-
-  useEffect(()=>{
-    async function getExperiences() {
-      try {
-        setLoading(true);
-        const res = await fetch(`${backend_url}/experiences`, {
-          headers: {"Content-Type": "application/json"},
-          method: "GET"
-        })
-        if (!res.ok) throw new Error ("Error fetching the experiences, reload");
-        const data = await res.json();
-        setExperiences(data)
-
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    getExperiences();
-  }, [])
-
+  if (isPending) return <Loading />;
   return (
     <div className="admin-experience">
       <AdminHeading>
@@ -42,16 +18,17 @@ function Experience() {
 
       <div className="admin-experience-lists">
         <ul>
-         {experiences?.map(experience => (
-          <AdminExperienceCard key={experience.id} experience={experience}/>
-         ))}
-         
+          {experiences?.map((experience) => (
+            <AdminExperienceCard key={experience.id} experience={experience} />
+          ))}
         </ul>
       </div>
 
       <div className="admin-button-box">
         <h5>Got a new experience?</h5>
-        <button onClick={()=> navigate("/admin/experience/add")}>Add Experience</button>
+        <button onClick={() => navigate("/admin/experience/add")}>
+          Add Experience
+        </button>
       </div>
     </div>
   );

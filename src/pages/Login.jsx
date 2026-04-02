@@ -1,45 +1,60 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { backend_url } from "../helpers/constants";
+import { useAuthLogin } from "../Services/useAuth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const { login, isLoggingIn } = useAuthLogin();
 
-  const handleLogin = async (e) => {
+  // const handleLogin = async (e) => {
+
+  //   e.preventDefault();
+  //   setError("");
+  //   setLoading(true);
+
+  //   try {
+  //     const res = await fetch(`${backend_url}/login`, {
+  //       method: "POST",
+  //       credentials: "include", // important for cookies
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (data.success) {
+  //       navigate("/dashboard"); // redirect on success
+  //     } else if (data.message) {
+  //       setError(data.message);
+  //     } else {
+  //       setError("Login failed. Try again.");
+  //     }
+  //   } catch (err) {
+  //     console.error("Login error:", err);
+  //     setError("Server error. Try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // {
+  //   onSettled: () => {
+  //     setEmail("");
+  //     setPassword("");
+  //   },
+  // }
+  function handleSubmit(e) {
     e.preventDefault();
-    setError("");
-    setLoading(true);
 
-    try {
-      const res = await fetch(`${backend_url}/login`, {
-        method: "POST",
-        credentials: "include", // important for cookies
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        navigate("/dashboard"); // redirect on success
-      } else if (data.message) {
-        setError(data.message);
-      } else {
-        setError("Login failed. Try again.");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Server error. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+    if (!email || !password) return;
+    login({
+      email,
+      password,
+    });
+  }
   const togglePassword = (e) => {
     e.preventDefault();
     setShowPassword((prev) => !prev);
@@ -52,7 +67,7 @@ function Login() {
           <img src="/Images/Login.jpg" alt="Login Background" />
         </div>
 
-        <form className="form-login" onSubmit={handleLogin}>
+        <form className="form-login" onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -76,10 +91,8 @@ function Login() {
             </button>
           </div>
 
-          {error && <small style={{ color: "red" }}>{error}</small>}
-
-          <button type="submit" className="form-btn" disabled={loading}>
-            {loading ? "Logging in..." : "Log in"}
+          <button type="submit" className="form-btn" disabled={isLoggingIn}>
+            {isLoggingIn ? "Logging in..." : "Log in"}
           </button>
         </form>
       </div>

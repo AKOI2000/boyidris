@@ -1,40 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { backend_url } from "../helpers/constants";
+import { useAddExperience } from "../Services/usePostDetails";
+import { useForm } from "react-hook-form";
 
 function AddExperience() {
   const navigate = useNavigate();
-  const [company, setCompany] = useState("");
-  const [role, setRole] = useState("");
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setdateEnd] = useState();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { register, handleSubmit, reset, formState } = useForm();
+  const { errors } = formState;
+  const { isCreating, addExperience } = useAddExperience();
 
-  async function AddNewExperience(e) {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      setError("");
-      const res = await fetch(`${backend_url}/experience/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company, role, dateStart, dateEnd }),
-      });
-      if (!res.ok)
-        throw new Error(
-          "Unable to add the new experience, start the process all over"
-        );
-
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-      navigate(-1);
-    }
+  function onSubmit(data) {
+    addExperience(data, {
+      onSuccess: () => {
+        navigate(-1);
+      },
+    });
   }
+
+  function onError() {}
 
   return (
     <div>
@@ -43,41 +27,53 @@ function AddExperience() {
         &times;
       </div>
 
-      <form className="form-experience" onSubmit={AddNewExperience}>
-        <label htmlFor="company">c</label>
+      <form
+        className="form-experience"
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
+        <label htmlFor="Company">Company</label>
         <input
           type="text"
           name="company"
-          id=""
+          id="company"
+      
           placeholder="Company Name..."
-          onChange={(e) => setCompany(e.target.value)}
-          required
+          {...register("company", {
+            required: "This field is required",
+          })}
         />
-        <label htmlFor="role">Role</label>
+        <label htmlFor="Role">Role</label>
         <input
           type="text"
           name="role"
-          id=""
+          id="role"
+  
           placeholder="Role..."
-          onChange={(e) => setRole(e.target.value)}
-          required
+          {...register("role", {
+            required: "This field is required",
+          })}
         />
         <label htmlFor="dateStart">Date Start</label>
         <input
           type="date"
           name="dateStart"
-          id=""
-          onChange={(e) => setDateStart(e.target.value)}
-          required
+          id="dateStart"
+          {...register("dateStart", {
+            required: "This field is required",
+          })}
         />
         <label htmlFor="dateEnd">Date End</label>
         <input
           type="date"
           name="dateEnd"
           id=""
-          onChange={(e) => setdateEnd(e.target.value)}
+          {...register("dateEnd")}
         />
-        <button type="submit" className="form-btn">
+        <button
+          type="submit"
+          className="
+        form-btn"
+        >
           Submit
         </button>
       </form>

@@ -3,15 +3,15 @@ import SectionHeading from "../component/SectionHeading";
 import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
 import { Helmet } from "react-helmet-async";
-import { useGetClients, useGetExperiences } from "../Services/useGetDetails";
+import {
+  useGetWebsiteClients,
+  useGetWebsiteExperiences,
+} from "../Services/useGetDetails";
 import Loading from "../component/Loading";
 
 function About() {
-  const { isPending, experiences = {} } = useGetExperiences();
-  const { isPending: isPendingClients, clients = {} } = useGetClients();
-
-  // const { id, name } = clients;
-  // console.log(experiences, isPending);
+  const { isPending, experiences = [] } = useGetWebsiteExperiences();
+  const { isPending: isPendingClients, clients = [] } = useGetWebsiteClients();
 
   function formatDate(dateString) {
     const date = new Date(dateString);

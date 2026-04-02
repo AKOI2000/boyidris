@@ -7,7 +7,7 @@ export default function Accordion({ data }) {
     <div className="accordion">
       {data.map((item, index) => (
         <AccordionItems
-          key={index + 1}
+          key={index}
           curOpen={curOpen}
           onOpen={setCurOpen}
           index={index + 1}

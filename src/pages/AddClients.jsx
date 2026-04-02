@@ -1,34 +1,24 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { useAddClient } from "../Services/usePostDetails";
+import { useForm } from "react-hook-form";
 
 function AddClients() {
   const navigate = useNavigate();
-  const [client, setClient] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const { register, handleSubmit, reset, formState } = useForm();
+  const { errors } = formState;
 
-  async function postClient(e) {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch(`${backend_url}{/clients`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ client: client }),
-      });
-      if (!res.ok) throw new Error("Couldn't added new client, try again");
-      const data = await res.json();
-      setMessage(data.message);
-    } catch (err) {
-      setError(err.message);
-      console.log(err);
-    } finally {
-      setLoading(false);
-      navigate(-1);
-    }
+  const { isCreating, addClients } = useAddClient();
+
+  function onSubmit(data) {
+    // console.log(data);
+    addClients(data.client, {
+      onSuccess: () => {
+        reset();
+        navigate(-1);
+      },
+    });
   }
+  function onError() {}
 
   return (
     <div>
@@ -37,19 +27,21 @@ function AddClients() {
         &times;
       </div>
 
-      <form className="form-client" onSubmit={postClient}>
+      <form className="form-client" onSubmit={handleSubmit(onSubmit, onError)}>
         <label htmlFor="client">Client</label>
         <input
           type="text"
           name="client"
-          id=""
+          id="client"
           placeholder="Client Name.."
-          onChange={(e) => setClient(e.target.value)}
+          {...register("client", {
+            required: "This field is required",
+          })}
+          disabled={isCreating}
         />
-        {error && <small className="error">{error}</small>}
-        {!error && message && <small className="success">{message}</small>}
-        <button className="form-btn" disabled={loading}>
-          {loading ? "Submitting" : "Submit"}
+        {errors && <small className="error">{errors?.client?.message}</small>}
+        <button className="form-btn" disabled={isCreating}>
+          {isCreating ? "Submitting" : "Submit"}
         </button>
       </form>
     </div>

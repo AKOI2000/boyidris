@@ -1,37 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import AdminHeading from "../component/AdminHeading";
 import AdminClientCard from "./AdminClientCard";
-import { useEffect, useState } from "react";
-import { backend_url } from "../helpers/constants";
+import { useGetClients } from "../Services/useGetDetails";
+import Loading from "../component/Loading";
 
 function Clients() {
   const navigate = useNavigate();
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { clients, isPending } = useGetClients();
 
-  useEffect(() => {
-    async function getClients() {
-      try {
-        setLoading(true);
-        setError("");
-        const result = await fetch(`${backend_url}/clients`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!result.ok) throw new Error("Can't fetch clients");
-        const data = await result.json();
+  // useEffect(() => {
+  //   async function getClients() {
+  //     try {
+  //       setLoading(true);
+  //       setError("");
+  //       const result = await fetch(`${backend_url}/clients`, {
+  //         method: "GET",
+  //         headers: { "Content-Type": "application/json" },
+  //       });
+  //       if (!result.ok) throw new Error("Can't fetch clients");
+  //       const data = await result.json();
 
-        setClients(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getClients();
-  }, []);
+  //       setClients(data);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   getClients();
+  // }, []);
 
+  if (isPending) return <Loading />;
   return (
     <div className="admin-clients">
       <AdminHeading>

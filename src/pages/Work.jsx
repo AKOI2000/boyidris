@@ -6,14 +6,14 @@ import SubHero from "../sections/SubHero";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Loading from "../component/Loading";
-import { useGetWork } from "../Services/useWorks";
+import { useGetWebsiteWork } from "../Services/useWorks";
 
 function Work() {
   // const [work, setWork] = useState({});
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState("");
   // const { slug } = useParams();
-  const { work = {}, isPending } = useGetWork();
+  const { work = {}, isPending } = useGetWebsiteWork();
 
   const { description, tags, created_at, title, images, slug, service } = work;
 

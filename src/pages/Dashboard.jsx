@@ -65,6 +65,7 @@ function Dashboard() {
         </aside>
 
         <div className={`free-box ${!open && "collapsed"}`}></div>
+        
         <main className="main">
           <Outlet />
         </main>

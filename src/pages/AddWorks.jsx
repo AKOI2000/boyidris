@@ -1,50 +1,21 @@
-import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { useForm } from "react-hook-form";
+import { useCreateWork } from "../Services/useWorks";
 
 function AddWorks() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState("");
-  const [images, setImages] = useState([]);
-  const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState("");
+  const { isPending, createWork } = useCreateWork();
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setUploading(true);
-    setMessage("");
-
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("tags", tags);
-
-      images.forEach((img) => formData.append("images", img));
-
-      const { data } = await axios.post(
-        `${backend_url}/work/create`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      if (data.success) {
-        setMessage("Post uploaded successfully!");
-        console.log("Saved post:", data.post);
+  function onSubmit(data) {
+    createWork(data, {
+      onSettled: () => {
+        reset;
         navigate(-1);
-      } else {
-        setMessage("Upload failed");
-      }
-    } catch (err) {
-      console.error(err);
-      setMessage("Something went wrong");
-    } finally {
-      setUploading(false);
-    }
-  };
+      },
+    });
+  }
+  function onError() {}
 
   return (
     <>
@@ -52,43 +23,50 @@ function AddWorks() {
         &times;
       </div>
       <h2 className="form-heading">Create New Post</h2>
-      <form onSubmit={handleSubmit} className="form-work">
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="form-work">
         <input
           className="title"
           type="text"
+          name="title"
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          {...register("title", {
+            required: "This field is required",
+          })}
           required
         />
 
         <textarea
           className="description"
           placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          {...register("description", {
+            required: "This field is required",
+          })}
         />
 
         <input
           type="text"
           className="tags"
           placeholder="Tags (comma separated)"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
+          name="tags"
+          {...register("tags", {
+            required: "This field is required",
+          })}
         />
         <input
           type="file"
           className="file"
+          name="images"
           multiple
           accept="image/*"
-          onChange={(e) => setImages([...e.target.files])}
+          {...register("images", {
+            required: "This field is required",
+          })}
         />
 
-        <button type="submit" disabled={uploading}>
-          {uploading ? "Uploading..." : "Upload Post"}
+        <button type="submit" disabled={isPending}>
+          {isPending ? "Uploading..." : "Upload Post"}
         </button>
-
-        {message && <p>{message}</p>}
       </form>
     </>
   );

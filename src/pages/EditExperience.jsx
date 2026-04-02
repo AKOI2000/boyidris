@@ -1,119 +1,83 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { useGetExperience } from "../Services/useGetDetails";
+import Loading from "../component/Loading";
+import { useForm } from "react-hook-form";
+import { useEditExperience } from "../Services/useEditDetails";
+import { format } from "date-fns";
 
 function EditExperience() {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [company, setCompany] = useState("");
-  const [role, setRole] = useState("");
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setdateEnd] = useState();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  function formatDate(dateString) {
-    const dateObject = new Date(dateString);
+  const { experience, isPending } = useGetExperience();
+  console.log(experience);
+  const { register, handleSubmit, reset, formState } = useForm();
+  const { errors } = formState;
 
-    const year = dateObject.getFullYear();
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0"); // getMonth() is 0-indexed
-    const day = dateObject.getDate().toString().padStart(2, "0");
+  const { editExperience, isEditing } = useEditExperience();
 
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate; // Output: 2024 11 09
+  function onSubmit(data) {
+    editExperience(data, {
+      onSuccess: () => {
+        navigate(-1);
+      },
+    });
   }
+  function onError() {}
 
-  async function editExistingExperience(e) {
-    e.preventDefault();
-
-    try {
-      setLoading(true);
-      const res = await fetch(`${backend_url}/experience/edit/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company, role, dateStart, dateEnd }),
-      });
-      if (!res.ok) throw new Error("Having trouble editing");
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-      navigate(-1);
-    }
-  }
-
-  useEffect(() => {
-    async function getExistingExperience() {
-      try {
-        setLoading(true);
-        setError("");
-        const res = await fetch(`${backend_url}/experience/${id}`, {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        });
-        if (!res.ok) throw new Error("Error fetching the data");
-        const data = await res.json();
-
-        setCompany(data.companyname);
-        setRole(data.role);
-        setDateStart(formatDate(data.datestart));
-        if (data.dateend === null) return;
-        setdateEnd(formatDate(data.dateend));
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getExistingExperience();
-  }, [id]);
-
+  if (isPending) return <Loading />;
   return (
     <div>
       <h1 className="form-heading">Edit Experience</h1>
       <div className="form-back" onClick={() => navigate(-1)}>
         &times;
       </div>
-      <form className="form-experience" onSubmit={editExistingExperience}>
+      <form
+        className="form-experience"
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
         <label htmlFor="Company">Company</label>
         <input
           type="text"
-          name="Company"
-          id=""
+          name="company"
+          id="company"
+          defaultValue={experience.companyname}
           placeholder="Company Name..."
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          required
+          {...register("company", {
+            required: "This field is required",
+          })}
         />
         <label htmlFor="Role">Role</label>
         <input
           type="text"
-          name="Role"
-          id=""
+          name="role"
+          id="role"
+          defaultValue={experience.role}
           placeholder="Role..."
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          required
+          {...register("role", {
+            required: "This field is required",
+          })}
         />
-        <label htmlFor="date-start">Date Start</label>
+        <label htmlFor="dateStart">Date Start</label>
         <input
           type="date"
-          name="date-start"
-          id=""
-          value={dateStart}
-          onChange={(e) => setDateStart(e.target.value)}
-          required
+          name="dateStart"
+          id="dateStart"
+          defaultValue={format(new Date(experience.datestart), "yyyy-MM-dd")}
+          {...register("dateStart", {
+            required: "This field is required",
+          })}
         />
-        <label htmlFor="date-end">Date End</label>
+        <label htmlFor="dateEnd">Date End</label>
         <input
           type="date"
-          name="date-end"
+          name="dateEnd"
           id=""
-          value={dateEnd}
-          onChange={(e) => setdateEnd(e.target.value)}
-          required
+          defaultValue={
+            experience.dateend
+              ? format(new Date(experience.dateend), "yyyy-MM-dd")
+              : ""
+          }
+          {...register("dateEnd")}
         />
         <button
           type="submit"

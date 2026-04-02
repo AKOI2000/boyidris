@@ -3,36 +3,16 @@ import AdminHeading from "../component/AdminHeading";
 import AdminworkCard from "./AdminworkCard";
 import { useEffect, useState } from "react";
 import { backend_url } from "../helpers/constants";
+import { useGetWorks } from "../Services/useWorks";
+import Loading from "../component/Loading";
 
 function AdminWorks() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
-  const [works, setWorks] = useState([""]);
- 
-  useEffect (() => {
-    async function getWorks () {
-     try {
-      setLoading(true) 
-      setError("")
-      const res = await fetch(`${backend_url}/allworks`, {
-        method: "GET",
-        headers: {"Content-Type": "application/json"},
-      });
-      if (!res.ok) throw new Error ("Unable to fetch");
-      const data = await res.json();
-      setWorks(data);
-     } catch (error) {
-      setError(error.message)
-     } finally {
-      setLoading(false)
-     }
-    }
+  // const [works, setWorks] = useState([""]);
 
-    getWorks();
-  }, [])
+  const { isPending, works } = useGetWorks();
 
-   if (loading) return <p>Loading...</p>
+  if (isPending) return <Loading />;
 
   return (
     <div className="admin-works">
@@ -43,25 +23,28 @@ function AdminWorks() {
 
       <div className="admin-work-lists">
         <ul>
-         {/* <AdminworkCard />
+          {/* <AdminworkCard />
          <AdminworkCard />
          <AdminworkCard />
          <AdminworkCard />
          <AdminworkCard />
          <AdminworkCard /> */}
-         
-          {works.map(work => (
-          <AdminworkCard key={work.id} work={work}/>
-         ))}
+
+          {works.map((work) => (
+            <AdminworkCard key={work.id} work={work} />
+          ))}
         </ul>
       </div>
       <div className="admin-button-box">
         <h5>Got a new work?</h5>
-        <button onClick={ () => {
-          navigate('/admin/work/add')
-        }}>Add Work</button>
+        <button
+          onClick={() => {
+            navigate("/admin/work/add");
+          }}
+        >
+          Add Work
+        </button>
       </div>
-     
     </div>
   );
 }

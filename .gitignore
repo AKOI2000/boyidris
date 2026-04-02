@@ -1,4 +1,5 @@
 .env
+/utils/db.js
 
 # Logs
 logs

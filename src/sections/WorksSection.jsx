@@ -3,33 +3,12 @@ import WorkCard from "../component/WorkCard";
 import Button from "../component/Button";
 import Loading from "../component/Loading";
 import { serverless_url } from "../helpers/constants";
-import { useGetWorks } from "../Services/useWorks";
+import { useGetPaginatedWorks } from "../Services/useWorks";
 
 export default function WorksSection() {
   const carouselRef = useRef(null);
-  const { isPending, works = [] } = useGetWorks();
-
-  console.log(works, isPending);
-  const featured = works?.slice(0, 3);
-
-  console.log(featured);
-
-  // Fetch featured works
-  // useEffect(() => {
-  //   async function getFeaturedWorks() {
-  //     try {
-  //       setLoading(true);
-  //       const res = await fetch(`${serverless_url}/api/works`);
-  //       const data = await res.json();
-  //       setFeatured(data.items?.slice(0, 3));
-  //     } catch (error) {
-  //       console.error("error fetching", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   getFeaturedWorks();
-  // }, []);
+  const { paginatedWorks = [], isFetching } = useGetPaginatedWorks();
+  const featured = paginatedWorks?.data?.slice(0, 3);
 
   // Horizontal scroll
 
@@ -39,12 +18,12 @@ export default function WorksSection() {
     carouselRef.current.scrollBy({ left: amount, behavior: "smooth" });
   };
 
-  if (isPending) return <Loading />;
+  if (isFetching) return <Loading />;
   return (
     <div className="carousel-wrapper">
       <>
         <div className="carousel" ref={carouselRef}>
-          {featured.map((work) => (
+          {featured?.map((work) => (
             <WorkCard
               key={work.slug}
               bg={work.images[0]}

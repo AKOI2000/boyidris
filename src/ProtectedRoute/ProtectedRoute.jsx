@@ -1,33 +1,21 @@
-import { useState, useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useCheckAuth } from "../Services/useAuth";
+import Loading from "../component/Loading";
+import { useEffect } from "react";
 
 function ProtectedRoute({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [ok, setOk] = useState(false);
+  const { user, isPending } = useCheckAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    async function checkAuth() {
-      try {
-        const res = await fetch(`${backend_url}/admin/check`, {
-          method: "GET",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
+  useEffect(
+    function () {
+      if (!user && !isPending) navigate("/login");
+    },
+    [user, isPending, navigate]
+  );
 
-        const data = await res.json();
-        setOk(data.loggedIn);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    checkAuth();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  return ok ? <Outlet /> : <Navigate to="/login" />;
+  if (isPending) return <Loading />;
+  if (user) return <Outlet />;
 }
 
 export default ProtectedRoute;

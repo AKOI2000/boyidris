@@ -1,28 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { backend_url } from "../helpers/constants";
+import { useDeleteClient } from "../Services/useDeleteDetails";
 
 function DeleteClient() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { isDeleting, deleteClient } = useDeleteClient();
 
-  function back(e) {
-    e.preventDefault();
-    navigate(-1);
-  }
-
-  async function confirm(e) {
-    e.preventDefault();
-    navigate(-1);
-    try {
-      const res = await fetch(`${backend_url}/client/delete/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!res.ok) throw new Error("Unable to delete");
-    } catch (error) {
-      console.log(error);
-    }
+  function confirm() {
+    deleteClient(id, {
+      onSuccess: () => {
+        navigate("/dashboard/clients");
+      },
+    });
   }
 
   return (
@@ -31,10 +21,14 @@ function DeleteClient() {
         Are you sure you want to delete this client?
       </h1>
       <div className="delete-section_buttons">
-        <button className="cancel" onClick={back}>
+        <button
+          className="cancel"
+          onClick={() => navigate(-1)}
+          disabled={isDeleting}
+        >
           Cancel
         </button>
-        <button className="confirm" onClick={confirm}>
+        <button className="confirm" onClick={confirm} disabled={isDeleting}>
           Confirm
         </button>
       </div>
