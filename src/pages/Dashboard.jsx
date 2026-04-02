@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
+import { serverless_url } from "../helpers/constants";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Dashboard() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(`${backend_url}/logout`, {
+      const res = await fetch(`${serverless_url}/logout`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

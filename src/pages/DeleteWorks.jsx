@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
 import { useDeleteWork } from "../Services/useWorks";
 
 function DeleteWorks() {
@@ -32,7 +31,7 @@ function DeleteWorks() {
           Cancel
         </button>
         <button className="confirm" onClick={confirm}>
-          Confirm
+          {isDeleting ? "Confirming" : "Confirm"}
         </button>
       </div>
     </div>

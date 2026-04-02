@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
 import { useDeleteClient } from "../Services/useDeleteDetails";
 
 function DeleteClient() {

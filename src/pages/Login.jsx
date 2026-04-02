@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
 import { useAuthLogin } from "../Services/useAuth";
 
 function Login() {

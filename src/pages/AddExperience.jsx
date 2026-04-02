@@ -1,13 +1,10 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { backend_url } from "../helpers/constants";
 import { useAddExperience } from "../Services/usePostDetails";
 import { useForm } from "react-hook-form";
 
 function AddExperience() {
   const navigate = useNavigate();
-  const { register, handleSubmit, reset, formState } = useForm();
-  const { errors } = formState;
+  const { register, handleSubmit, reset } = useForm();
   const { isCreating, addExperience } = useAddExperience();
 
   function onSubmit(data) {
@@ -36,7 +33,6 @@ function AddExperience() {
           type="text"
           name="company"
           id="company"
-      
           placeholder="Company Name..."
           {...register("company", {
             required: "This field is required",
@@ -47,7 +43,6 @@ function AddExperience() {
           type="text"
           name="role"
           id="role"
-  
           placeholder="Role..."
           {...register("role", {
             required: "This field is required",
@@ -63,18 +58,14 @@ function AddExperience() {
           })}
         />
         <label htmlFor="dateEnd">Date End</label>
-        <input
-          type="date"
-          name="dateEnd"
-          id=""
-          {...register("dateEnd")}
-        />
+        <input type="date" name="dateEnd" id="" {...register("dateEnd")} />
         <button
           type="submit"
           className="
         form-btn"
+          disabled={isCreating}
         >
-          Submit
+          {isCreating ? "Submitting.." : "Submit"}
         </button>
       </form>
     </div>

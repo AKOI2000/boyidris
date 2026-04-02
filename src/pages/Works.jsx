@@ -3,11 +3,11 @@ import SectionHeading from "../component/SectionHeading";
 import Pagination from "../component/Pagination";
 import Footer from "../sections/Footer";
 import Navbar from "../component/Navbar";
-import { useEffect, useState } from "react";
+
 import { Helmet } from "react-helmet-async";
 import Loading from "../component/Loading";
-import { backend_url } from "../helpers/constants";
-import { useGetPaginatedWorks, useGetWorks } from "../Services/useWorks";
+
+import { useGetPaginatedWorks } from "../Services/useWorks";
 
 function Works() {
   const [searchParams, setSearchParams] = useSearchParams();

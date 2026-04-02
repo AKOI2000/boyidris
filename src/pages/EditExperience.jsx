@@ -10,8 +10,7 @@ function EditExperience() {
 
   const { experience, isPending } = useGetExperience();
   console.log(experience);
-  const { register, handleSubmit, reset, formState } = useForm();
-  const { errors } = formState;
+  const { register, handleSubmit } = useForm();
 
   const { editExperience, isEditing } = useEditExperience();
 
@@ -83,8 +82,9 @@ function EditExperience() {
           type="submit"
           className="
         form-btn"
+          disabled={isEditing}
         >
-          Submit
+          {isEditing ? "Submitting" : " Submit"}
         </button>
       </form>
     </div>

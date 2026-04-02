@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import SectionHeading from "../component/SectionHeading";
 import Footer from "../sections/Footer";
 import SubHero from "../sections/SubHero";
-import { useParams } from "react-router-dom";
+
 import { Helmet } from "react-helmet-async";
 import Loading from "../component/Loading";
 import { useGetWebsiteWork } from "../Services/useWorks";
@@ -34,28 +33,6 @@ function Work() {
 
     return formattedDate;
   }
-
-  // useEffect(() => {
-  //   async function getWork() {
-  //     try {
-  //       setLoading(false);
-  //       setError("");
-
-  //       const res = await fetch(
-  //         `https://boyidrisserverless.vercel.app/api/work?slug=${slug}`
-  //       );
-  //       if (!res.ok) throw new Error("Error fetching work, reload please");
-  //       const data = await res.json();
-  //       setWork(data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   getWork();
-  // }, [slug]);
 
   if (isPending) return <Loading />;
 
