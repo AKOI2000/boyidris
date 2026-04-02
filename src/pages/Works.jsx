@@ -18,6 +18,7 @@ function Works() {
   if (isFetching) return <Loading />;
 
   const totalPages = paginatedWorks?.pagination.totalPages;
+  console.log(totalPages);
 
   function onPageChange(action) {
     setSearchParams({ page: action });
