@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { slug } = req.params;
+  const { slug } = req.query; // 👈 not req.params
 
   if (!slug) {
     return res.status(400).json({ error: "Slug is required" });
