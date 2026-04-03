@@ -8,15 +8,9 @@ import Loading from "../component/Loading";
 import { useGetWebsiteWork } from "../Services/useWorks";
 
 function Work() {
-  // const [work, setWork] = useState({});
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
-  // const { slug } = useParams();
   const { work = {}, isPending } = useGetWebsiteWork();
 
   const { description, tags, created_at, title, images, slug, service } = work;
-
-  console.log(work);
 
   function formatDate(dateString) {
     const date = new Date(dateString);

@@ -1,9 +1,9 @@
-import pool from './db.js';
+import pool from "./db.js";
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://boyidris.vercel.app'); // restrict to your frontend
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Origin", "https://boyidris.vercel.app"); // restrict to your frontend
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -15,10 +15,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await pool.query(
-      "SELECT * FROM posts WHERE slug = $1",
-      [slug]
-    );
+    const result = await pool.query("SELECT * FROM posts WHERE slug = $1", [
+      slug,
+    ]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Work not found" });

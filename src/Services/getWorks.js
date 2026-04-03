@@ -29,7 +29,7 @@ export async function getPaginatedWorks(page) {
 export async function getWebsiteWork(slug) {
   // const res = await fetch(`${serverless_url}/work/${slug}`);
 
-  const res = await fetch(`/api/work/${slug}`, {
+  const res = await fetch(`/api/work.js/${slug}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
