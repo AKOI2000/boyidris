@@ -9,7 +9,7 @@ function EditExperience() {
   const navigate = useNavigate();
 
   const { experience, isPending } = useGetExperience();
-  console.log(experience);
+  // console.log(experience);
   const { register, handleSubmit } = useForm();
 
   const { editExperience, isEditing } = useEditExperience();

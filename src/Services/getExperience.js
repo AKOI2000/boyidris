@@ -75,7 +75,7 @@ export async function addExperiences(experience) {
 
 export async function editExperiences(id, experience) {
   const { company, role, dateStart, dateEnd } = experience;
-  console.log(experience);
+  // console.log(experience);
   const res = await fetch(`${serverless_url}/experience/edit/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

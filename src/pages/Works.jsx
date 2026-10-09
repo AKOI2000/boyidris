@@ -9,16 +9,50 @@ import Loading from "../component/Loading";
 
 import { useGetPaginatedWorks } from "../Services/useWorks";
 
+function WorksGrid({ paginatedWorks, isFetching }) {
+  if (isFetching) {
+    return (
+      <div className="portfolio-works">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (!paginatedWorks?.data?.length) {
+    return (
+      <div className="portfolio-works">
+        <p>No projects available right now.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="portfolio-works">
+      {paginatedWorks.data.map((work) => (
+        <Link
+          to={`/work/${work.slug}`}
+          key={work.id}
+          className="portfolio-work"
+        >
+          <div className="img-box">
+            <img src={work.images[0]} alt={`Idris for ${work.alt}`} />
+          </div>
+          <div className="text-box">
+            <h3>{work.title}</h3>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function Works() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
 
   const { paginatedWorks, isFetching } = useGetPaginatedWorks();
 
-  if (isFetching) return <Loading />;
-
   const totalPages = paginatedWorks?.pagination.totalPages;
-  console.log(totalPages);
 
   function onPageChange(action) {
     setSearchParams({ page: action });
@@ -88,22 +122,7 @@ function Works() {
             </h5>
           </div>
 
-          <div className="portfolio-works">
-            {paginatedWorks?.data?.map((work) => (
-              <Link
-                to={`/work/${work.slug}`}
-                key={work.id}
-                className="portfolio-work"
-              >
-                <div className="img-box">
-                  <img src={work.images[0]} alt={`Idris for ${work.alt}`} />
-                </div>
-                <div className="text-box">
-                  <h3>{work.title}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <WorksGrid paginatedWorks={paginatedWorks} isFetching={isFetching} />
 
           {totalPages > 1 && (
             <div className="pages-box">

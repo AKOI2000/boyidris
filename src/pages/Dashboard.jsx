@@ -18,9 +18,9 @@ function Dashboard() {
       });
       if (!res.ok) throw new Error("Error Logging out");
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
       navigate("/login");

@@ -9,27 +9,88 @@ import {
 } from "../Services/useGetDetails";
 import Loading from "../component/Loading";
 
-function About() {
-  const { isPending, experiences = [] } = useGetWebsiteExperiences();
-  const { isPending: isPendingClients, clients = [] } = useGetWebsiteClients();
-
+function ExperienceSection({ experiences, isPending }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
 
     const options = {
-      // day: '2-digit',
       month: "long",
       year: "numeric",
       timeZone: "UTC",
     };
-    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
-      date
-    );
 
-    return formattedDate;
+    return new Intl.DateTimeFormat("en-GB", options).format(date);
   }
 
-  if (isPending || isPendingClients) return <Loading />;
+  if (isPending) {
+    return (
+      <div className="experience">
+        <div className="container">
+          <div className="grid col-1-of-2 column-gap-md">
+            <SectionHeading>Experience</SectionHeading>
+            <Loading />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="experience">
+      <div className="container">
+        <div className="grid col-1-of-2 column-gap-md">
+          <SectionHeading>Experience</SectionHeading>
+
+          <ul>
+            {experiences.map((experience) => (
+              <li key={experience.id}>
+                <h4>{experience.companyname}</h4>
+                <h5>{experience.role}</h5>
+                <p>
+                  {experience.datestart && formatDate(experience.datestart)} - {experience.dateend ? formatDate(experience.dateend) : "Present"}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClientsSection({ clients, isPending }) {
+  if (isPending) {
+    return (
+      <div className="clients">
+        <div className="container">
+          <div className="grid col-1-of-2 column-gap-md">
+            <SectionHeading>Clients</SectionHeading>
+            <Loading />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="clients">
+      <div className="container">
+        <div className="grid col-1-of-2 column-gap-md">
+          <SectionHeading>Clients</SectionHeading>
+          <ul>
+            {clients.map((client) => (
+              <li key={client.id}>{client.client}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function About() {
+  const { isPending, experiences = [] } = useGetWebsiteExperiences();
+  const { isPending: isPendingClients, clients = [] } = useGetWebsiteClients();
 
   return (
     <>
@@ -138,42 +199,8 @@ function About() {
           </div>
         </div>
 
-        <div className="experience">
-          <div className="container">
-            <div className="grid col-1-of-2 column-gap-md">
-              <SectionHeading>Experience</SectionHeading>
-
-              <ul>
-                {experiences.map((experience) => (
-                  <li key={experience.id}>
-                    <h4>{experience.companyname}</h4>
-                    <h5>{experience.role}</h5>
-                    <p>
-                      {experience.datestart && formatDate(experience.datestart)}{" "}
-                      -{" "}
-                      {experience.dateend
-                        ? formatDate(experience.dateend)
-                        : "Present"}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="clients">
-          <div className="container">
-            <div className="grid col-1-of-2 column-gap-md">
-              <SectionHeading>Clients</SectionHeading>
-              <ul>
-                {clients.map((client) => (
-                  <li key={client.id}>{client.client}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+        <ExperienceSection experiences={experiences} isPending={isPending} />
+        <ClientsSection clients={clients} isPending={isPendingClients} />
 
         <Footer />
       </div>
